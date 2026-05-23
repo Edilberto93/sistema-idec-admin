@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - sistema-idec-frontend
+name: Despliegue Frontend Estatico IDEC
 
 on:
   push:
@@ -9,54 +9,26 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
-  build:
-    runs-on: windows-latest
-    permissions:
-      contents: read #This is required for actions/checkout
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.x'
-
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-
   deploy:
     runs-on: windows-latest
-    needs: build
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
-      
-      - name: Login to Azure
+      - name: Descargar codigo fuente
+        uses: actions/checkout@v4
+
+      - name: Iniciar sesion en Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7AF0CA4FC0E745CDA83D5654DD91DC3F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3D54125E89F54F0F917E828BF1AFCDC4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_10804591056A402191D2526887D2AB86 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5739535D338742DBB60DEF0CF18A1DDF }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2C63594C69F244EB8AAA38AF0BA7885 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DAD47BE2298B49E787614A2E96076562 }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Desplegar archivos HTML a Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'sistema-idec-frontend'

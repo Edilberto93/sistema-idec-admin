@@ -1,0 +1,202 @@
+/* =======================================================================
+   1. ESTRUCTURA GLOBAL Y CONFIGURACIÓN BASE
+   ======================================================================= */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #1f3a60, #3a6073); /* Fondo general unificado para el sistema */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Wrapper Principal: Organiza la barra lateral y el contenido */
+#wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row; /* Disposición nativa en fila para pantallas grandes */
+    width: 100%;
+}
+
+/* =======================================================================
+   2. ESTILOS DE LA BARRA LATERAL (SIDEBAR) - MODO ESCRITORIO
+   ======================================================================= */
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: #003399 !important; /* Azul institucional estricto */
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.sidebar h4 {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 15px;
+}
+
+/* Enlaces del Menú Lateral */
+.sidebar .nav-link {
+    padding: 12px 15px;
+    border-radius: 0.4rem;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(4px);
+}
+
+/* Estado Activo del Menú Seleccionado */
+.sidebar .nav-link.active {
+    background-color: #ffffff !important;
+    color: #003399 !important;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* =======================================================================
+   3. ÁREA DE CONTENIDO PRINCIPAL Y FORMULARIOS
+   ======================================================================= */
+.content-area {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+/* Tarjeta contenedora de cada uno de los 8 formularios */
+.form-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* Tipografías de encabezados interiores */
+.titulo-formulario {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.subtitulo-formulario {
+    text-align: center;
+    color: #cfd8dc;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.form-container h3 {
+    color: #003399;
+    font-weight: 600;
+    border-bottom: 2px solid #003399;
+    padding-bottom: 8px;
+}
+
+.form-container .form-label {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Estilos de la sección Estética de Inicio */
+.titulo-inicio {
+    text-align: center;
+    color: white;
+    font-weight: 700;
+}
+
+.lead {
+    text-align: center;
+    color: #e5e8e8;
+}
+
+.imagen-inicio {
+    display: block;
+    margin: 30px auto 0 auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.8rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* =======================================================================
+   4. SISTEMA TOTALMENTE RESPONSIVO (MEDIA QUERIES)
+   ======================================================================= */
+
+/* Cambios estructurales para Tablets y Celulares (Menos de 768px) */
+@media (max-width: 768px) {
+    #wrapper {
+        flex-direction: column; /* Transiciona la barra lateral hacia arriba de forma elástica */
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        padding: 15px !important;
+    }
+
+    .sidebar h4 {
+        text-align: center;
+        margin-bottom: 10px !important;
+        padding-bottom: 8px;
+    }
+
+    /* Modifica el menú para que se despliegue de forma horizontal en la parte superior */
+    .sidebar .nav {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .sidebar .nav-link {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        margin-bottom: 0;
+    }
+
+    .sidebar .nav-link:hover {
+        transform: translateY(-2px); /* Ajuste de animación hacia arriba en móviles */
+    }
+
+    /* Ajustes del área del contenido */
+    .content-area {
+        padding: 15px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .titulo-formulario {
+        font-size: 1.5rem;
+        margin-top: 10px; /* Elimina el margen negativo destructivo */
+    }
+}
+
+/* Optimizaciones para Pantallas Muy Pequeñas (Menos de 480px) */
+@media (max-width: 480px) {
+    .sidebar .nav-link {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .form-container {
+        padding: 15px;
+    }
+
+    .form-container .btn {
+        width: 100%; /* Todos los botones operativos se vuelven de ancho completo para facilitar la pulsación táctil */
+        padding: 10px;
+    }
+}

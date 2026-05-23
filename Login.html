@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Sistema IDEC</title>
+    
+    <!-- Bootstrap -->
+    <link href="../Bootstrap/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Archivo CSS personalizado -->
+    <link rel="stylesheet" href="Login.css" />
+</head>
+
+<body class="bg-gradient d-flex align-items-center justify-content-center min-vh-100">
+
+    <!-- Contenedor principal del login -->
+    <main class="card shadow-lg p-4 rounded-4 login-card text-center">
+        
+        <!-- Logo -->
+        <div class="mb-3">
+            <img src="../imagen.png" alt="Logo Iglesia" class="logo-top mb-3">
+        </div>
+
+        <!-- Título -->
+        <h4 class="fw-bold mb-4">Inicio de Sesión</h4>
+
+        <!-- Formulario de Login -->
+        <form id="loginForm">
+            <div class="mb-3 text-start">
+                <label for="nombreUsuario" class="form-label fw-semibold">Nombre de Usuario</label>
+                <input type="text" class="form-control" id="nombreUsuario" placeholder="Ingrese su usuario" required />
+            </div>
+
+            <div class="mb-3 text-start">
+                <label for="contrasena" class="form-label fw-semibold">Contraseña</label>
+                <input type="password" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-2">Iniciar Sesión</button>
+        </form>
+
+        <!-- Sección de código de verificación -->
+        <div id="authCodeSection" class="d-none mt-4">
+            <label for="codigo" class="form-label fw-semibold">Código de Verificación</label>
+            <input type="text" id="codigo" class="form-control mb-2" placeholder="Ingresa el código de 6 dígitos">
+            <button type="button" class="btn btn-success w-100" id="btnVerificarCodigo">Verificar Código</button>
+        </div>
+
+        <!-- Pie -->
+        <p class="mt-4 text-muted small">Sistema de Gestión IDEC © 2026</p>
+    </main>
+
+    <!-- Script principal -->
+    <script src="Login.js"></script>
+    <script src="../Bootstrap/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

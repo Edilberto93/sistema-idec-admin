@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../Bootstrap/bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="menu.css" />
+    <title>Menú Principal - Sistema IDEC</title>
+</head>
+<body>
+    <!--Inicia el escript-->
+   <!-- <form id="MenuLogin"> --> 
+<div class="d-flex" id="wrapper">
+    <!-- SIDEBAR -->
+    <div class="bg-primary text-white p-3 sidebar">
+        <h4 class="mb-4">Sistema IDEC</h4>
+        <ul class="nav flex-column" id="menu">
+            <li class="nav-item">
+                <a class="nav-link text-white active" href="#" data-section="inicio">🏠 Inicio</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white " href="#" data-section="idec">📝 Registro de IDEC </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#" data-section="usuario">👥 Usuarios</a>
+            </li>
+
+            <li class="nav-item"> 
+                 <a class="nav-link text-white" href="#" data-section="ingresos">💰 Ingresos</a>
+            </li>
+
+             <li class="nav-item">
+                <a class="nav-link text-white" href="#" data-section="activos">📦 Activos</a>
+            </li>
+
+             <li class="nav-item">
+                <a class="nav-link text-white" href="#" data-section="obras">🏥 Obras Sociales</a>
+            </li>
+
+            <li class="nav-item" > 
+                <a class="nav-link text-white" href="#" data-section="pagos">💳 Pagos</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#" data-section="reportes">📊 Reportes</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#" data-section="bajas"> <i class="fas fa-user-slash"></i>🚫 Gestión de Bajas </a>
+            </li>
+
+            <li class="nav-item mt-4">
+                <a class="nav-link text-warning" href="#" onclick="cerrarSesion()">🔒 Cerrar Sesión</a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="content p-4 flex-grow-1" id="mainContent">
+        <!-- Para saber si es tarde o manaña-->
+        <div id="saludoUsuario" class="fs-4 mb-4 fw-bold saludo-personalizado text-center text-md-start"></div>
+        <!--finaliza-->
+        
+        <!--Es para la bienvenida en el documento-->
+        <div id="inicio" class="content-section">
+            <h1 class="titulo-inicio">Bienvenido al Sistema IDEC Sacpuy</h1>
+            <p class="lead">Selecciona una opción del menú lateral para comenzar.</p>
+             <!--Para la imagen en el inicio del sistema-->
+             <img src="../logoidec.png" alt="Logo IDEC Sacpuy" class="imagen-inicio">
+        </div>
+         <!--Finaliza la bienvenida-->
+
+        <!--Registro de IDEC-->
+     <div id="idec" class="content-section d-none">
+            <h1 class="titulo-formulario">Administración de sedes y ubicaciones regionales</h1>
+           <!--<p class="subtitulo-formulario">Llena cada uno de los espacios en blanco</p>--> 
+            <!-- Formulario 1 -->
+            <div class="form-container">
+                <form id="formregistro">
+                  <div class="form-group col-md-6">
+                    <label for="codigoig">Codigo Iglesia:</label>
+                    <input type="text" class="form-control" id="codigoig" placeholder="Ingrese Codigo Iglesia">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="pais">Pais:</label>
+                    <input type="text" class="form-control" id="pais" placeholder="Ingrese Pais">
+                  </div>
+                  <div class="form-group">
+                    <label for="departamento">Departamento:</label>
+                    <input type="text" class="form-control" id="departamento" placeholder="Ingrese Departamento">
+                  </div>
+                  <div class="form-group">
+                    <label for="municipio">Municipio:</label>
+                    <input type="text" class="form-control" id="municipio" placeholder="Ingrese Municipio">
+                  </div>
+                  <div class="form-group">
+                    <label for="distrito">Distrito:</label>
+                    <input type="text" class="form-control" id="distrito" placeholder="Ingrese Distrito">
+                  </div>
+                  <div class="form-group">
+                    <label for="aldea">Aldea:</label>
+                    <input type="text" class="form-control" id="aldea" placeholder="Ingrese Aldea">
+                  </div>
+                  <div class="form-group">
+                    <label for="caserio">Caserio:</label>
+                    <input type="text" class="form-control" id="caserio" placeholder="Ingrese Caserio">
+                  </div>
+                  <div class="form-group">
+                    <label for="region">Region:</label>
+                    <input type="text" class="form-control" id="region" placeholder="Ingrese Región">
+                  </div>
+                  <div class="form-group">
+                    <label for="direccion">Direccion:</label>
+                    <input type="text" class="form-control" id="direccion" placeholder="Ingrese Dirección">
+                  </div>
+                    <div class="form-group col-md-6">
+                    <label>Estado:</label>
+                        <select id="estado" class="form-control">
+                         <option value="true">Activo</option>
+                         <option value="false">Inactivo</option>
+                    </select>
+                    </div>
+                  <!-- Otros campos del formulario -->
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                  </form>
+              </div>
+            </div>
+
+<!--Fin del Formulario 1-->
+
+<!--Formulario 2 -- Registro de Miembros de la IDEC-->
+<div id="usuario" class="content-section container py-4">
+    <div class="text-center mb-4">
+        <h1 class="titulo-formulario display-4" style="font-weight: bold;">Registro de Miembros</h1>
+        <p class="subtitulo-formulario display-4">Llena cada uno de los espacios en blanco para completar el registro</p>
+        <hr style="width: 50px; border-top: 3px solid #007bff; margin: auto;">
+    </div>
+
+    <div class="form-container shadow-sm p-4 bg-white rounded">
+        <form id="formMiembros">
+            <input type="hidden" id="datosPersonalID" value="0">
+
+            <div class="form-row">
+                <div class="form-group col-md-12 text-center mb-4">
+                    <label class="d-block font-weight-bold">Fotografía del Miembro</label>
+                    <div class="position-relative d-inline-block mt-2">
+                        <img id="previewFoto" 
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23cccccc'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='16' fill='%23666666'%3EFoto%3C/text%3E%3C/svg%3E" 
+                                     class="rounded-circle img-thumbnail shadow-sm" 
+                                        style="width: 150px; height: 150px; object-fit: cover;"
+                                             alt="Vista previa de la fotografía del miembro"
+                                                 title="Vista previa de la foto">
+                    </div>
+                    <div class="mt-3 custom-file" style="max-width: 300px; margin: auto;">
+                        <label for="fotoInput" class="sr-only">Seleccionar fotografía del miembro</label>
+    
+                        <input type="file" class="form-control-file border p-1" id="fotoInput" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="nombres" class="font-weight-bold">Nombres:</label>
+                    <input type="text" class="form-control" id="nombres" required autocomplete="off">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellidos" class="font-weight-bold">Apellidos:</label>
+                    <input type="text" class="form-control" id="apellidos" required autocomplete="off">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="dpi" class="font-weight-bold">DPI (CUI):</label>
+                    <input type="text" class="form-control" id="dpi" required placeholder="0000 00000 0000">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="edad" class="font-weight-bold">Edad:</label>
+                    <input type="number" class="form-control" id="edad" required min="0">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sexo" class="font-weight-bold">Sexo:</label>
+                    <select class="form-control" id="sexo">
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="estadocivil" class="font-weight-bold">Estado Civil:</label>
+                    <select class="form-control" id="estadocivil">
+                        <option value="Soltero">Soltero</option>
+                        <option value="Casado">Casado</option>
+                        <option value="Divorciado">Divorciado</option>
+                        <option value="Viudo">Viudo</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-8">
+                    <label for="lugardenacimiento" class="font-weight-bold">Lugar de Nacimiento:</label>
+                    <input type="text" class="form-control" id="lugardenacimiento" required placeholder="Municipio, Departamento">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cargo" class="font-weight-bold">Cargo Actual:</label>
+                    <input type="text" class="form-control" id="cargo">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="profesion" class="font-weight-bold">Profesión / Oficio:</label>
+                    <input type="text" class="form-control" id="profesion">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="numeroregistro" class="font-weight-bold">No. Registro:</label>
+                    <input type="text" class="form-control" id="numeroregistro">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="libro" class="font-weight-bold">Libro:</label>
+                    <input type="text" class="form-control" id="libro">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="folio" class="font-weight-bold">Folio:</label>
+                    <input type="text" class="form-control" id="folio">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="leer" class="font-weight-bold">¿Lee?</label>
+                    <select class="form-control" id="leer">
+                        <option value="Si">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="escribir" class="font-weight-bold">¿Escribe?</label>
+                    <select class="form-control" id="escribir">
+                        <option value="Si">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="grado" class="font-weight-bold">Grado Académico:</label>
+                    <input type="text" class="form-control" id="grado">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="conversion" class="font-weight-bold text-primary">Fecha Conversión:</label>
+                    <input type="date" class="form-control border-primary" id="conversion">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="bautismoa" class="font-weight-bold text-primary">Bautismo Agua:</label>
+                    <input type="date" class="form-control border-primary" id="bautismoa">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="recepcion" class="font-weight-bold text-primary">Recepción Miembro:</label>
+                    <input type="date" class="form-control border-primary" id="recepcion">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="bautismo_es" class="font-weight-bold text-info">Bautismo Espíritu Santo:</label>
+                    <input type="date" class="form-control border-info" id="bautismo_es">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="llamado" class="font-weight-bold text-info">Llamado Ministerio:</label>
+                    <input type="date" class="form-control border-info" id="llamado">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="fallecido" class="font-weight-bold">Fallecido:</label>
+                    <select class="form-control" id="fallecido">
+                        <option value="false">No</option>
+                        <option value="true">Sí</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="transferido" class="font-weight-bold">Transferido:</label>
+                    <select class="form-control" id="transferido">
+                        <option value="false">No</option>
+                        <option value="true">Sí</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="reg_estado" class="font-weight-bold">Estado Activo:</label>
+                    <select class="form-control" id="reg_estado">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="codigoigle" class="font-weight-bold">Código de Iglesia / Registro:</label>
+                    <input type="text" class="form-control border-danger" id="codigoigle" required placeholder="Ej. IDEC-2024-001">
+                    <small class="text-muted italic">Este código identifica la sede local.</small>
+                </div>
+            </div>
+
+            <div class="form-actions mt-4 text-center">
+               <button type="submit" class="btn btn-success btn-lg px-5 shadow">
+                <i class="fas fa-save mr-2"></i> Guardar Registro Completo
+              </button>
+                    <!-- El botón reset ahora es opcional, el JS limpiará todo al guardar -->
+            </div>
+        </form>
+    </div>
+</div>
+<!--Fin del Formulario 2-->
+
+
+
+
+   <!--Inicia Formulario de Ingresos de la IDEC sacpuy-->
+    <div id="ingresos" class="content-section d-none">
+    <div class="container mt-2">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="fas fa-hand-holding-usd"></i> Gestión de Ingresos - IDEC</h4>
+            </div>
+            
+            <div class="card-body bg-light">
+                <form id="formIngresos">
+                    <input type="hidden" id="ingresosID"> <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="diezmos" class="font-weight-bold">Diezmos (Q):</label>
+                            <input type="number" step="0.01" class="form-control" id="diezmos" required placeholder="0.00">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="ofrendas" class="font-weight-bold">Ofrendas (Q):</label>
+                            <input type="number" step="0.01" class="form-control" id="ofrendas" required placeholder="0.00">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="primicias" class="font-weight-bold">Primicias (Q):</label>
+                            <input type="number" step="0.01" class="form-control" id="primicias" required placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-4">
+                            <label for="mesPagado" class="font-weight-bold">Mes Correspondiente:</label>
+                            <select class="form-control" id="mesPagado" required>
+                                <option value="">Seleccione un mes...</option>
+                                <option value="Enero">Enero</option>
+                                <option value="Febrero">Febrero</option>
+                                <option value="Marzo">Marzo</option>
+                                <option value="Abril">Abril</option>
+                                <option value="Mayo">Mayo</option>
+                                <option value="Junio">Junio</option>
+                                <option value="Julio">Julio</option>
+                                <option value="Agosto">Agosto</option>
+                                <option value="Septiembre">Septiembre</option>
+                                <option value="Octubre">Octubre</option>
+                                <option value="Noviembre">Noviembre</option>
+                                <option value="Diciembre">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="fechaIngreso" class="font-weight-bold">Fecha de Registro:</label>
+                            <input type="date" class="form-control" id="fechaIngreso" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="codigoPerID" class="font-weight-bold text-primary">ID de Persona (Donante):</label>
+                            <input type="number" class="form-control border-primary" id="codigoPerID" required placeholder="Ej: 9">
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="descripcionIngreso" class="font-weight-bold">Descripción / Nota:</label>
+                        <textarea class="form-control" id="descripcionIngreso" rows="2" placeholder="Detalles adicionales del ingreso..."></textarea>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success btn-lg px-5 shadow">
+                            <i class="fas fa-save"></i> Guardar Ingreso
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+   <!--Finaliza el Formulario de Ingresos de la IDEC sacpuy-->
+
+<!--Formulario 3 para ingreso de activos-->
+<div id="activos" class="content-section d-none">
+    <div class="container mt-2">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-boxes"></i> Registro de Activos - IDEC</h4>
+            </div>
+            
+            <div class="card-body bg-light">
+                <form id="formActivos">
+                    
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="numeroActivo" class="font-weight-bold">Número de Activo:</label>
+                            <input type="text" class="form-control" id="numeroActivo" required placeholder="Ej: ACT-2026-01">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="area" class="font-weight-bold">Área / Departamento:</label>
+                            <input type="text" class="form-control" id="area" required placeholder="Ej: Nave Central">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="fechaAdquisicion" class="font-weight-bold">Fecha de Adquisición:</label>
+                            <input type="date" class="form-control" id="fechaAdquisicion" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-4">
+                            <label for="costo" class="font-weight-bold">Costo del Activo (Q):</label>
+                            <input type="number" step="0.01" class="form-control" id="costo" required placeholder="0.00">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="estadoActivo" class="font-weight-bold">Estado Actual:</label>
+                            <select class="form-control" id="estadoActivo">
+                                <option value="true">Activo / Operativo</option>
+                                <option value="false">Inactivo / Baja</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="codigoIglesia" class="font-weight-bold text-primary">Vincular a Iglesia (Código):</label>
+                            <input type="text" class="form-control border-primary" id="codigoIglesia" required placeholder="Ej: IDEC-001">
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="descripcion" class="font-weight-bold">Descripción:</label>
+                        <textarea class="form-control" id="descripcion" rows="2" placeholder="Detalles técnicos o estado físico..."></textarea>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                            <i class="fas fa-save"></i> Guardar Activo
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Fin del Formulario 3-->
+
+<!--Inicia formulario 4-->
+<div id="obras" class="content-section d-none">
+    <h2 class="titulo-formulario">Obras Sociales - IDEC</h2>
+    <p class="subtitulo-formulario">Registro de personas beneficiadas</p>
+
+    <div class="container-fluid mt-2">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-hand-holding-heart"></i> Registro de Beneficiario</h4>
+            </div>
+            
+            <div class="card-body bg-light">
+                <form id="formObrasSociales">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="ciu" class="font-weight-bold">CUI (Identificación):</label>
+                            <input type="text" class="form-control border-primary" id="ciu" name="ciu" required 
+                                   placeholder="Ej: CUI-123" title="Ingrese el Código Único de Identificación">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="nombresObras" class="font-weight-bold">Nombres:</label>
+                            <input type="text" class="form-control" id="nombresObras" name="nombresObras" required 
+                                   placeholder="Ingrese nombres" title="Escriba los nombres del beneficiario">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="apellidosObras" class="font-weight-bold">Apellidos:</label>
+                            <input type="text" class="form-control" id="apellidosObras" name="apellidosObras" required 
+                                   placeholder="Ingrese apellidos" title="Escriba los apellidos del beneficiario">
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-4">
+                            <label for="fechaNacObras" class="font-weight-bold">Fecha de Nacimiento:</label>
+                            <input type="date" class="form-control" id="fechaNacObras" name="fechaNacObras" required 
+                                   title="Seleccione la fecha de nacimiento">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="lugarObras" class="font-weight-bold">Lugar de Residencia:</label>
+                            <input type="text" class="form-control" id="lugarObras" name="lugarObras" 
+                                   placeholder="Municipio, Departamento" title="Ingrese el lugar de residencia">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="telefonoObras" class="font-weight-bold">Teléfono:</label>
+                            <input type="text" class="form-control" id="telefonoObras" name="telefonoObras" 
+                                   placeholder="Ej: 5544-3322" title="Ingrese número telefónico">
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-4">
+                            <label for="codigoIglesiaObras" class="font-weight-bold text-primary">Sede Iglesia (Código):</label>
+                            <input type="text" class="form-control border-primary" id="codigoIglesiaObras" name="codigoIglesiaObras" 
+                                   required placeholder="Ej: IDEC-001" title="Ingrese el código de la iglesia">
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="fotoObras" class="font-weight-bold">Fotografía del Beneficiario:</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="fotoObras" name="fotoObras" accept="image/*" 
+                                       title="Subir fotografía">
+                                <label class="custom-file-label" for="fotoObras">Elegir archivo...</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="descripcionObras" class="font-weight-bold">Descripción / Observaciones:</label>
+                        <textarea class="form-control" id="descripcionObras" name="descripcionObras" rows="2" 
+                                  placeholder="Detalles adicionales..." title="Ingrese observaciones"></textarea>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow rounded-pill">
+                            <i class="fas fa-save"></i> Guardar Beneficiario
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Fin del Formulario 4-->
+<!--Inicia formulario 5-->
+<div id="pagos" class="content-section d-none">
+    <div class="container mt-2">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0"><i class="fas fa-hand-holding-usd"></i> Registro de Pagos Mensuales - IDEC</h4>
+                <div class="text-right">
+                    <small class="d-block text-uppercase font-weight-bold" style="font-size: 0.7rem; opacity: 0.9;">Saldo Disponible</small>
+                    <span id="txtSaldoActual" class="h4 mb-0 font-weight-bold">Q 0.00</span>
+                </div>
+            </div>
+            
+            <div class="card-body bg-light">
+                <form id="formPagos">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="MesPagado" class="font-weight-bold">Mes que se cancela:</label>
+                            <select class="form-control border-success" id="MesPagado" name="MesPagado" required>
+                                <option value="">Seleccione mes...</option>
+                                <option value="Enero">Enero</option>
+                                <option value="Febrero">Febrero</option>
+                                <option value="Marzo">Marzo</option>
+                                <option value="Abril">Abril</option>
+                                <option value="Mayo">Mayo</option>
+                                <option value="Junio">Junio</option>
+                                <option value="Julio">Julio</option>
+                                <option value="Agosto">Agosto</option>
+                                <option value="Septiembre">Septiembre</option>
+                                <option value="Octubre">Octubre</option>
+                                <option value="Noviembre">Noviembre</option>
+                                <option value="Diciembre">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="anioPagado" class="font-weight-bold">Año:</label>
+                            <input type="number" class="form-control" id="anioPagado" name="AnioPagado" required value="2026" min="2020">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="codigoIglesiaPago" class="font-weight-bold text-success">Código de Iglesia:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-success" id="codigoIglesiaPago" name="CodigoIglesia" required placeholder="Ej: 08-I017">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success" type="button" id="btnConsultarSaldo"><i class="fas fa-sync-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-3">
+                            <label for="pagoEnergia" class="font-weight-bold">Energía Eléctrica (Q):</label>
+                            <input type="number" step="0.01" min="0" class="form-control sumable-pago" id="pagoEnergia" value="0.00">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="pagoAgua" class="font-weight-bold">Agua Potable (Q):</label>
+                            <input type="number" step="0.01" min="0" class="form-control sumable-pago" id="pagoAgua" value="0.00">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="pagoInsumos" class="font-weight-bold">Limpieza / Insumos (Q):</label>
+                            <input type="number" step="0.01" min="0" class="form-control sumable-pago" id="pagoInsumos" value="0.00">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="otrosPagos" class="font-weight-bold">Otros Pagos (Q):</label>
+                            <input type="number" step="0.01" min="0" class="form-control sumable-pago" id="otrosPagos" value="0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-8">
+                            <label for="descripcionPago" class="font-weight-bold">Descripción / Observaciones:</label>
+                            <textarea class="form-control" id="descripcionPago" name="Descripcion" rows="2" placeholder="Detalles del pago, número de recibo, etc..."></textarea>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="font-weight-bold text-dark">Total a Registrar:</label>
+                            <div class="h-75 d-flex align-items-center justify-content-center bg-white border rounded">
+                                <span id="totalBadge" class="h3 mb-0 text-success font-weight-bold">Q 0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success btn-lg px-5 shadow">
+                            <i class="fas fa-file-invoice-dollar"></i> Guardar Registro de Pago
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Fin del Formulario 5-->
+
+<!--Formulario de reportes 6-->
+<div id="section-reportes" class="content-section d-none container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="fas fa-file-pdf me-2" aria-hidden="true"></i>
+                    <h5 class="mb-0">Centro de Generación de Reportes PDF</h5>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="row g-3 mb-4 p-3 bg-white rounded shadow-sm border">
+                        <div class="col-12 mb-2">
+                            <span class="badge bg-info text-dark">
+                                <i class="fas fa-info-circle me-1"></i> 
+                                Configure los filtros y luego elija el tipo de reporte
+                            </span>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <label for="codigoIglesiaFiltro" class="form-label fw-bold">Código de Iglesia</label>
+                            <input type="text" id="codigoIglesiaFiltro" class="form-control border-primary" value="C001" placeholder="Ej: C001">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="mesFiltro" class="form-label fw-bold">Mes</label>
+                            <select id="mesFiltro" class="form-select">
+                                <option value="Enero">Enero</option>
+                                <option value="Febrero">Febrero</option>
+                                <option value="Marzo">Marzo</option>
+                                <option value="Abril">Abril</option>
+                                <option value="Mayo">Mayo</option>
+                                <option value="Junio">Junio</option>
+                                <option value="Julio">Julio</option>
+                                <option value="Agosto">Agosto</option>
+                                <option value="Septiembre">Septiembre</option>
+                                <option value="Octubre">Octubre</option>
+                                <option value="Noviembre">Noviembre</option>
+                                <option value="Diciembre">Diciembre</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="anioFiltro" class="form-label fw-bold">Año</label>
+                            <input type="number" id="anioFiltro" class="form-control" value="2026">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="estadoFiltro" class="form-label fw-bold">Estado de Usuario</label>
+                            <select id="estadoFiltro" class="form-select">
+                                <option value="Activo">Activo</option>
+                                <option value="Baja">Baja</option>
+                                <option value="Transferido">Transferido</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <button onclick="generarReportePDF(1)" class="btn btn-outline-success w-100 p-3 shadow-sm">
+                                <i class="fas fa-users d-block mb-2 fa-2x"></i>
+                                1. Usuarios Activos
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button onclick="generarReportePDF(2)" class="btn btn-outline-danger w-100 p-3 shadow-sm">
+                                <i class="fas fa-user-slash d-block mb-2 fa-2x"></i>
+                                2. Bajas / Transferidos
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button onclick="generarReportePDF(3)" class="btn btn-outline-primary w-100 p-3 shadow-sm">
+                                <i class="fas fa-boxes d-block mb-2 fa-2x"></i>
+                                3. Activos e Inventario
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button onclick="generarReportePDF(4)" class="btn btn-outline-info w-100 p-3 shadow-sm text-dark">
+                                <i class="fas fa-hand-holding-heart d-block mb-2 fa-2x"></i>
+                                4. Obras Sociales Mensuales
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button onclick="generarReportePDF(5)" class="btn btn-outline-secondary w-100 p-3 shadow-sm">
+                                <i class="fas fa-file-invoice-dollar d-block mb-2 fa-2x"></i>
+                                5. Pagos Mensuales (Servicios)
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button onclick="generarReportePDF(6)" class="btn btn-outline-warning w-100 p-3 shadow-sm text-dark">
+                                 <i class="fas fa-coins d-block mb-2 fa-2x"></i>
+                                6. Ingresos Mensuales
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Fin del Formulario de reportes 6-->
+
+<!--Inicia Formulario 7 de bajas de Miembros, activos, iglesias y acceso al sistema-->
+<div id="bajas" class="content-section d-none">
+    <div class="container mt-2">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0"><i class="fas fa-exclamation-triangle"></i> Módulo de Bajas Lógicas - IDEC</h4>
+                <span class="badge badge-light">Sistema de Control Interno</span>
+            </div>
+            
+            <div class="card-body bg-light">
+                <p class="text-muted italic">Seleccione el módulo y proporcione el ID para inactivar el registro en la base de datos.</p>
+                <hr>
+                <form id="formBajas">
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="tipoTablaBaja" class="font-weight-bold">Módulo a afectar:</label>
+                            <select class="form-control border-danger" id="tipoTablaBaja" required>
+                                <option value="">Seleccione módulo...</option>
+                                <option value="usuarios">Sistemas - Usuarios (Acceso)</option>
+                                <option value="personal">Membresía - Datos Personales</option>
+                                <option value="activos">Inventario - Activos Fijos</option>
+                                <option value="idec">Administración - Sedes/Iglesias</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label for="idRegistroBaja" class="font-weight-bold">ID / Código del Registro:</label>
+                            <input type="text" class="form-control border-danger" id="idRegistroBaja" 
+                                   placeholder="Ej: 7, 27, ACT-005, 0007" required>
+                            <small class="text-danger">* Verifique el ID antes de procesar.</small>
+                        </div>
+
+                        <div class="form-group col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-danger btn-block shadow">
+                                <i class="fas fa-trash-alt"></i> Procesar Baja
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center bg-white">
+                <div id="mensajeBaja" class="alert d-none m-0"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Finaliza Formulario 7 de bajas de Miembros, activos, iglesias y acceso al sistema-->
+
+<script>
+    const token = localStorage.getItem("token");
+
+    if (token !== "autenticado") {
+        window.location.href = "Login.html";
+    }
+</script>
+<script src="../Bootstrap/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script src="menu.js"></script>
+<script src="registro.js"></script>
+</body>
+</html>

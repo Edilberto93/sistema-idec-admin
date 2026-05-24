@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnVerificarCodigo = document.getElementById("btnVerificarCodigo");
 
     // ===============================================================
-    // FLRE 1: LOGIN PRINCIPAL (VALIDAR USUARIO Y CONTRASEÑA)
+    // FLUJO 1: LOGIN PRINCIPAL (VALIDAR USUARIO Y CONTRASEÑA)
     // ===============================================================
     if (loginForm) {
         loginForm.addEventListener("submit", async function (e) {
@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Alerta visual de espera para la comunicación con Azure
             Swal.fire({
                 title: 'Verificando credenciales...',
                 text: 'Conectando con el servidor de seguridad de Azure SQL...',
@@ -46,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             try {
-                // Petición POST al endpoint de autenticación
-                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                // RUTA CORREGIDA: Apunta a /usuarios/login según tu controlador C#
+                const response = await fetch(`${API_BASE_URL}/usuarios/login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -55,24 +54,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     },
                     body: JSON.stringify({
                         NombreUsuario: nombreUsuario,
-                        Contrasena: contrasena
+                        ContraseñaHash: contrasena // Asegúrate de que este nombre coincida con tu modelo Usuario en C#
                     })
                 });
 
-                Swal.close(); // Cerrar indicador de carga
+                Swal.close();
 
                 if (response.ok) {
                     const data = await response.json();
 
-                    // Guardamos temporalmente los datos para el paso del 2FA
                     usuarioIDTemporal = data.UsuarioID || data.usuarioID;
                     nombreUsuarioTemporal = nombreUsuario;
 
-                    // Guardamos de una vez el nombre completo para el uso en reportes PDF
                     const nombreMostrar = data.NombreCompleto || data.nombreCompleto || nombreUsuario;
                     localStorage.setItem("usuarioNombre", nombreMostrar);
 
-                    // Transición estética en el HTML (Ocultar Login / Mostrar Código)
                     loginForm.classList.add("d-none");
                     if (authCodeSection) {
                         authCodeSection.classList.remove("d-none");
@@ -81,13 +77,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     Swal.fire({
                         icon: 'success',
                         title: 'Acceso inicial autorizado',
-                        text: 'Se ha enviado un código de verificación. Por favor verifique su bandeja o celular.',
+                        text: 'Se ha enviado un código de verificación.',
                         timer: 3000,
                         showConfirmButton: false
                     });
-
                 } else {
-                    // Manejo seguro del error si el servidor no devuelve JSON
                     const errorText = await response.text();
                     let mensajeError = "Usuario o contraseña incorrectos.";
                     try {
@@ -96,19 +90,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     } catch (e) {
                         if (errorText) mensajeError = errorText;
                     }
-
                     Swal.fire("Error de Autenticación", mensajeError, "error");
                 }
-
             } catch (error) {
                 console.error("Error crítico en la comunicación de login:", error);
-                Swal.fire("Fallo de Red", "No se pudo establecer conexión remota con el módulo de seguridad en Azure.", "error");
+                Swal.fire("Fallo de Red", "No se pudo establecer conexión con Azure.", "error");
             }
         });
     }
 
     // ===============================================================
-    // FLUJO 2: VERIFICACIÓN DEL SEGUNDO FACTOR (CÓDIGO DE 6 DÍGITOS)
+    // FLUJO 2: VERIFICACIÓN DEL SEGUNDO FACTOR
     // ===============================================================
     if (btnVerificarCodigo) {
         btnVerificarCodigo.addEventListener("click", async function () {
@@ -116,60 +108,37 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!codigoInput) return;
 
             const codigo = codigoInput.value.trim();
-
             if (!codigo || codigo.length < 6) {
-                Swal.fire("Código Requerido", "Por favor, ingrese el código de verificación completo (6 dígitos).", "warning");
+                Swal.fire("Código Requerido", "Ingrese el código de 6 dígitos.", "warning");
                 return;
             }
 
             Swal.fire({
-                title: 'Validando código de seguridad...',
+                title: 'Validando...',
                 allowOutsideClick: false,
                 didOpen: () => { Swal.showLoading(); }
             });
 
             try {
-                // Endpoint para validar el token asignado al Usuario ID
                 const response = await fetch(`${API_BASE_URL}/codigos/verificar/${usuarioIDTemporal}/${codigo}`, {
-                    method: "GET", // Cambia a POST si tu endpoint así lo requiere en el backend
+                    method: "GET",
                     headers: { "Accept": "application/json" }
                 });
 
                 Swal.close();
-
-                if (!response.ok) {
-                    throw new Error("El servidor de seguridad rechazó la solicitud o el ID es inexistente.");
-                }
+                if (!response.ok) throw new Error("Error en la validación.");
 
                 const resultado = await response.json();
 
-                // Validación estricta del resultado proveniente de Azure SQL
                 if (resultado.Valido === 1 || resultado.Valido === true) {
-                    
-                    Swal.fire({
-                        title: '¡Verificación Exitosa!',
-                        text: 'Identidad confirmada. Redireccionando al panel administrativo...',
-                        icon: 'success',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-
-                    // Establecemos el token seguro que tu archivo 'html.txt' (menú) va a validar al entrar
                     localStorage.setItem("token", "autenticado");
                     localStorage.setItem("usuarioID", usuarioIDTemporal);
-
-                    // Redirección automática hacia el menú principal
-                    setTimeout(() => {
-                        window.location.href = "html.html"; // Asegúrate de que coincida con el nombre exacto de tu HTML de inicio
-                    }, 1800);
-
+                    window.location.href = "html.html";
                 } else {
-                    Swal.fire("Código Inválido", "El código ingresado es incorrecto, ya fue utilizado o ha expirado.", "error");
+                    Swal.fire("Código Inválido", "El código es incorrecto o expiró.", "error");
                 }
-
             } catch (error) {
-                console.error("Error crítico en verificación de token:", error);
-                Swal.fire("Error de Sincronización", "No se pudo validar el código. Asegúrese de que el servicio web de la API esté activo.", "error");
+                Swal.fire("Error", "No se pudo validar el código.", "error");
             }
         });
     }

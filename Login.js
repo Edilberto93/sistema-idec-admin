@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Validación de éxito
                 if (response.ok && (resultado.Valido === 1 || resultado.Valido === true)) {
                     localStorage.setItem("token", "autenticado");
-                    window.location.href = "html.html";
+                    window.location.href = "Menu.html";
                 } else {
                     Swal.fire("Código Inválido", "El código es incorrecto o expiró.", "error");
                 }

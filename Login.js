@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnVerificarCodigo = document.getElementById("btnVerificarCodigo");
 
     // ===============================================================
-    // FLUJO 1: LOGIN PRINCIPAL
+    // FLUJO 1: LOGIN PRINCIPAL Y DISPARO DE CÓDIGO
     // ===============================================================
     if (loginForm) {
         loginForm.addEventListener("submit", async function (e) {
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             Swal.fire({ title: 'Verificando...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
             try {
+                // 1. Intentar Login
                 const response = await fetch(`${API_BASE_URL}/usuarios/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -38,19 +39,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     const data = await response.json();
                     usuarioIDTemporal = data.UsuarioID;
                     
-                    // --- INTEGRACIÓN: DISPARAR ENVÍO DE CÓDIGO ---
+                    // 2. Disparar generación de código (independientemente si falla el envío de correo)
                     try {
-                        await fetch(`${API_BASE_URL}/codigos/generar`, {
+                        const emailResponse = await fetch(`${API_BASE_URL}/codigos/generar`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            // Se envía como objeto para que [FromBody] en C# lo reciba bien
                             body: JSON.stringify({ UsuarioID: usuarioIDTemporal })
                         });
                         
-                        Swal.fire("Código enviado", "Hemos enviado un código a tu correo.", "success");
+                        const emailResult = await emailResponse.json();
+                        
+                        if (emailResponse.ok) {
+                            Swal.fire("Código enviado", "Hemos enviado un código a tu correo.", "success");
+                        } else {
+                            Swal.fire("Aviso", emailResult.Mensaje || "Error al generar código.", "warning");
+                        }
                     } catch (err) {
                         console.error("Error al disparar el envío:", err);
-                        Swal.fire("Aviso", "Login exitoso, pero hubo un problema al enviar el código.", "warning");
+                        Swal.fire("Aviso", "Login exitoso, pero hubo un problema técnico al enviar el código.", "error");
                     }
 
                     Swal.close();
@@ -60,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     Swal.fire("Error", "Usuario o contraseña incorrectos.", "error");
                 }
             } catch (error) {
-                Swal.fire("Error", "Fallo de conexión con Azure.", "error");
+                Swal.fire("Error", "Fallo de conexión con el servidor.", "error");
             }
         });
     }
@@ -71,6 +77,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (btnVerificarCodigo) {
         btnVerificarCodigo.addEventListener("click", async function () {
             const codigo = document.getElementById("codigo").value.trim();
+
+            if (!codigo) {
+                Swal.fire("Atención", "Por favor ingresa el código.", "warning");
+                return;
+            }
 
             Swal.fire({ title: 'Validando...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
@@ -87,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     localStorage.setItem("usuarioID", usuarioIDTemporal);
                     window.location.href = "html.html";
                 } else {
-                    Swal.fire("Código Inválido", resultado.Mensaje || "El código es incorrecto.", "error");
+                    Swal.fire("Código Inválido", resultado.Mensaje || "El código es incorrecto o ha expirado.", "error");
                 }
             } catch (error) {
                 Swal.fire("Error", "No se pudo validar el código.", "error");

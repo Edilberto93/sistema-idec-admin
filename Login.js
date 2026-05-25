@@ -6,7 +6,6 @@ const API_BASE_URL = "https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewe
 console.log("Módulo de autenticación (login.js) cargado correctamente ✅");
 
 let usuarioIDTemporal = null;
-let nombreUsuarioTemporal = null;
 
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
@@ -39,12 +38,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     const data = await response.json();
                     usuarioIDTemporal = data.UsuarioID;
                     
-                    // --- INTEGRACIÓN CORREGIDA ---
+                    // --- INTEGRACIÓN: DISPARAR ENVÍO DE CÓDIGO ---
                     try {
                         await fetch(`${API_BASE_URL}/codigos/generar`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            // Se cambió a "UsuarioID" para coincidir con el DTO del backend
+                            // Se envía como objeto para que [FromBody] en C# lo reciba bien
                             body: JSON.stringify({ UsuarioID: usuarioIDTemporal })
                         });
                         
@@ -53,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.error("Error al disparar el envío:", err);
                         Swal.fire("Aviso", "Login exitoso, pero hubo un problema al enviar el código.", "warning");
                     }
-                    // -----------------------------
 
                     Swal.close();
                     loginForm.classList.add("d-none");

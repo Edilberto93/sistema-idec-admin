@@ -39,6 +39,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     const data = await response.json();
                     usuarioIDTemporal = data.UsuarioID;
                     
+                    // --- INTEGRACIÓN: LLAMADA PARA DISPARAR EL ENVÍO DEL CORREO ---
+                    try {
+                        await fetch(`${API_BASE_URL}/codigos/generar`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ usuarioID: usuarioIDTemporal })
+                        });
+                        
+                        Swal.fire("Código enviado", "Hemos enviado un código a tu correo.", "success");
+                    } catch (err) {
+                        console.error("Error al disparar el envío:", err);
+                        Swal.fire("Aviso", "Login exitoso, pero hubo un problema al enviar el código.", "warning");
+                    }
+                    // --------------------------------------------------------------
+
                     Swal.close();
                     loginForm.classList.add("d-none");
                     authCodeSection.classList.remove("d-none");
@@ -52,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ===============================================================
-    // FLUJO 2: VERIFICACIÓN DEL SEGUNDO FACTOR (CORREGIDO)
+    // FLUJO 2: VERIFICACIÓN DEL SEGUNDO FACTOR
     // ===============================================================
     if (btnVerificarCodigo) {
         btnVerificarCodigo.addEventListener("click", async function () {
@@ -61,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
             Swal.fire({ title: 'Validando...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
             try {
-                // Se envía como query string para coincidir con los parámetros del método en C#
                 const response = await fetch(`${API_BASE_URL}/codigos/validar?usuarioID=${usuarioIDTemporal}&codigo=${codigo}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" }

@@ -39,12 +39,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     const data = await response.json();
                     usuarioIDTemporal = data.UsuarioID;
                     
-                    // --- INTEGRACIÓN: LLAMADA PARA DISPARAR EL ENVÍO DEL CORREO ---
+                    // --- INTEGRACIÓN CORREGIDA ---
                     try {
                         await fetch(`${API_BASE_URL}/codigos/generar`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ usuarioID: usuarioIDTemporal })
+                            // Se cambió a "UsuarioID" para coincidir con el DTO del backend
+                            body: JSON.stringify({ UsuarioID: usuarioIDTemporal })
                         });
                         
                         Swal.fire("Código enviado", "Hemos enviado un código a tu correo.", "success");
@@ -52,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.error("Error al disparar el envío:", err);
                         Swal.fire("Aviso", "Login exitoso, pero hubo un problema al enviar el código.", "warning");
                     }
-                    // --------------------------------------------------------------
+                    // -----------------------------
 
                     Swal.close();
                     loginForm.classList.add("d-none");

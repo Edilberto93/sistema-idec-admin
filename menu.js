@@ -116,31 +116,32 @@ function cerrarSesion() {
 // 5. LÓGICA DE GUARDADO DEL FORMULARIO DE SEDES
 // =======================================================================
 document.getElementById('formregistro').addEventListener('submit', async function(e) {
-    e.preventDefault(); // Evita que la página se recargue
+    e.preventDefault(); 
 
-    // 1. LISTA DE CAMPOS OBLIGATORIOS A VALIDAR
     const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
     let formularioValido = true;
     let primerCampoConError = null;
 
+    // 1. VALIDACIÓN RIGUROSA
     ids.forEach(id => {
         const input = document.getElementById(id);
         if (!input.value.trim()) {
             input.classList.add('is-invalid');
             formularioValido = false;
-            if (!primerCampoConError) primerCampoConError = input; // Captura el primero vacío
+            if (!primerCampoConError) primerCampoConError = input;
         } else {
             input.classList.remove('is-invalid');
         }
     });
 
+    // 2. BLOQUEO TOTAL SI HAY ERROR
     if (!formularioValido) {
-        alert("¡Error! Debes llenar todos los espacios en blanco antes de guardar.");
-        primerCampoConError.focus(); // Coloca el cursor en el primer campo vacío
-        return; // Detiene la ejecución
+        alert("¡Error! Debes llenar todos los espacios en blanco.");
+        primerCampoConError.focus();
+        return; // <--- ESTO ES VITAL: Si hay error, aquí muere la función.
     }
 
-    // 2. PREPARACIÓN DE DATOS
+    // 3. SI LLEGA AQUÍ, ES PORQUE TODO ESTÁ LLENO
     const data = {
         CodigoIglesia: document.getElementById('codigoig').value,
         Pais: document.getElementById('pais').value,
@@ -154,11 +155,6 @@ document.getElementById('formregistro').addEventListener('submit', async functio
         Estado: document.getElementById('estado').value === 'true'
     };
 
-    // 3. ENVÍO A LA BASE DE DATOS
-    const btnGuardar = document.querySelector('.btn-guardar-pro');
-    btnGuardar.disabled = true; // Bloquea el botón para evitar doble clic
-    btnGuardar.textContent = 'Guardando...';
-
     try {
         const response = await fetch('TU_URL_AQUI', {
             method: 'POST',
@@ -168,15 +164,11 @@ document.getElementById('formregistro').addEventListener('submit', async functio
 
         if (response.ok) {
             alert('¡Registro guardado exitosamente!');
-            document.getElementById('formregistro').reset(); // Limpia el formulario
+            document.getElementById('formregistro').reset();
         } else {
-            alert('Error al guardar. Por favor, revisa la conexión.');
+            alert('Error al guardar. Verifica los datos.');
         }
     } catch (error) {
-        console.error('Error al enviar los datos:', error);
-        alert('Ocurrió un error inesperado al conectar con el servidor.');
-    } finally {
-        btnGuardar.disabled = false; // Reactiva el botón
-        btnGuardar.textContent = 'Guardar';
+        alert('Error de conexión con el servidor.');
     }
 });

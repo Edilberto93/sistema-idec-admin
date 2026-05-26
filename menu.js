@@ -111,3 +111,63 @@ function cerrarSesion() {
         }
     });
 }
+
+// =======================================================================
+// 5. LÓGICA DE GUARDADO DEL FORMULARIO DE SEDES
+// =======================================================================
+document.getElementById('formregistro').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Evita que la página se recargue
+
+    // 1. LISTA DE CAMPOS OBLIGATORIOS A VALIDAR
+    const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
+    let formularioValido = true;
+
+    ids.forEach(id => {
+        const input = document.getElementById(id);
+        // Si el valor está vacío después de quitar espacios en blanco
+        if (!input.value.trim()) {
+            input.classList.add('is-invalid'); // Borde rojo de Bootstrap
+            formularioValido = false;
+        } else {
+            input.classList.remove('is-invalid'); // Quita el borde rojo si ya está lleno
+        }
+    });
+
+    if (!formularioValido) {
+        alert("Por favor, completa todos los campos antes de guardar.");
+        return; // Detiene la ejecución
+    }
+
+    // 2. PREPARACIÓN DE DATOS
+    const data = {
+        CodigoIglesia: document.getElementById('codigoig').value,
+        Pais: document.getElementById('pais').value,
+        Departamento: document.getElementById('departamento').value,
+        Municipio: document.getElementById('municipio').value,
+        Distrito: document.getElementById('distrito').value,
+        Aldea: document.getElementById('aldea').value,
+        Caserio: document.getElementById('caserio').value,
+        Region: document.getElementById('region').value,
+        Direccion: document.getElementById('direccion').value,
+        Estado: document.getElementById('estado').value === 'true'
+    };
+
+    // 3. ENVÍO A LA BASE DE DATOS
+    try {
+        const response = await fetch('TU_URL_AQUI', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            alert('¡Registro guardado exitosamente!');
+            document.getElementById('formregistro').reset(); // Limpia el formulario
+        } else {
+            alert('Error al guardar. Por favor, revisa la conexión.');
+        }
+    } catch (error) {
+        console.error('Error al enviar los datos:', error);
+        alert('Ocurrió un error inesperado al conectar con el servidor.');
+    }
+});

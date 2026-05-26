@@ -151,7 +151,7 @@
 <div id="usuario" class="content-section container py-4">
     <div class="text-center mb-4">
         <h1 class="titulo-formulario display-4" style="font-weight: bold;">Registro de Miembros</h1>
-        <p class="subtitulo-formulario display-4">Llena cada uno de los espacios en blanco para completar el registro</p>
+        <p class="subtitulo-formulario">Llena los campos para completar el registro</p>
         <hr style="width: 50px; border-top: 3px solid #007bff; margin: auto;">
     </div>
 
@@ -159,165 +159,56 @@
         <form id="formMiembros">
             <input type="hidden" id="datosPersonalID" value="0">
 
-            <div class="form-row">
-                <div class="form-group col-md-12 text-center mb-4">
-                    <label class="d-block font-weight-bold">Fotografía del Miembro</label>
-                    <div class="position-relative d-inline-block mt-2">
-                        <img id="previewFoto" 
-                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%23cccccc'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='16' fill='%23666666'%3EFoto%3C/text%3E%3C/svg%3E" 
-                                     class="rounded-circle img-thumbnail shadow-sm" 
-                                        style="width: 150px; height: 150px; object-fit: cover;"
-                                             alt="Vista previa de la fotografía del miembro"
-                                                 title="Vista previa de la foto">
-                    </div>
-                    <div class="mt-3 custom-file" style="max-width: 300px; margin: auto;">
-                        <label for="fotoInput" class="sr-only">Seleccionar fotografía del miembro</label>
-    
-                        <input type="file" class="form-control-file border p-1" id="fotoInput" accept="image/*">
-                    </div>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="nombres" class="font-weight-bold">Nombres:</label>
-                    <input type="text" class="form-control" id="nombres" required autocomplete="off">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="apellidos" class="font-weight-bold">Apellidos:</label>
-                    <input type="text" class="form-control" id="apellidos" required autocomplete="off">
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="dpi" class="font-weight-bold">DPI (CUI):</label>
-                    <input type="text" class="form-control" id="dpi" required placeholder="0000 00000 0000">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="edad" class="font-weight-bold">Edad:</label>
-                    <input type="number" class="form-control" id="edad" required min="0">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sexo" class="font-weight-bold">Sexo:</label>
-                    <select class="form-control" id="sexo">
-                        <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="estadocivil" class="font-weight-bold">Estado Civil:</label>
-                    <select class="form-control" id="estadocivil">
-                        <option value="Soltero">Soltero</option>
-                        <option value="Casado">Casado</option>
-                        <option value="Divorciado">Divorciado</option>
-                        <option value="Viudo">Viudo</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-8">
-                    <label for="lugardenacimiento" class="font-weight-bold">Lugar de Nacimiento:</label>
-                    <input type="text" class="form-control" id="lugardenacimiento" required placeholder="Municipio, Departamento">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="cargo" class="font-weight-bold">Cargo Actual:</label>
-                    <input type="text" class="form-control" id="cargo">
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="profesion" class="font-weight-bold">Profesión / Oficio:</label>
-                    <input type="text" class="form-control" id="profesion">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="numeroregistro" class="font-weight-bold">No. Registro:</label>
-                    <input type="text" class="form-control" id="numeroregistro">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="libro" class="font-weight-bold">Libro:</label>
-                    <input type="text" class="form-control" id="libro">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="folio" class="font-weight-bold">Folio:</label>
-                    <input type="text" class="form-control" id="folio">
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label for="leer" class="font-weight-bold">¿Lee?</label>
-                    <select class="form-control" id="leer">
-                        <option value="Si">Sí</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="escribir" class="font-weight-bold">¿Escribe?</label>
-                    <select class="form-control" id="escribir">
-                        <option value="Si">Sí</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="grado" class="font-weight-bold">Grado Académico:</label>
-                    <input type="text" class="form-control" id="grado">
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="conversion" class="font-weight-bold text-primary">Fecha Conversión:</label>
-                    <input type="date" class="form-control border-primary" id="conversion">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="bautismoa" class="font-weight-bold text-primary">Bautismo Agua:</label>
-                    <input type="date" class="form-control border-primary" id="bautismoa">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="recepcion" class="font-weight-bold text-primary">Recepción Miembro:</label>
-                    <input type="date" class="form-control border-primary" id="recepcion">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="bautismo_es" class="font-weight-bold text-info">Bautismo Espíritu Santo:</label>
-                    <input type="date" class="form-control border-info" id="bautismo_es">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="llamado" class="font-weight-bold text-info">Llamado Ministerio:</label>
-                    <input type="date" class="form-control border-info" id="llamado">
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="fallecido" class="font-weight-bold">Fallecido:</label>
-                    <select class="form-control" id="fallecido">
-                        <option value="false">No</option>
-                        <option value="true">Sí</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="transferido" class="font-weight-bold">Transferido:</label>
-                    <select class="form-control" id="transferido">
-                        <option value="false">No</option>
-                        <option value="true">Sí</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="reg_estado" class="font-weight-bold">Estado Activo:</label>
-                    <select class="form-control" id="reg_estado">
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-12">
-                    <label for="codigoigle" class="font-weight-bold">Código de Iglesia / Registro:</label>
-                    <input type="text" class="form-control border-danger" id="codigoigle" required placeholder="Ej. IDEC-2024-001">
-                    <small class="text-muted italic">Este código identifica la sede local.</small>
+            <div class="text-center mb-4">
+                <img id="previewFoto" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23cccccc'/%3E%3C/svg%3E" 
+                     class="rounded-circle img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+                <div class="mt-2">
+                    <input type="file" class="form-control-file border p-1" id="fotoInput" accept="image/*">
                 </div>
             </div>
 
-            <div class="form-actions mt-4 text-center">
-               <button type="submit" class="btn btn-success btn-lg px-5 shadow">
-                <i class="fas fa-save mr-2"></i> Guardar Registro Completo
-              </button>
-                    <!-- El botón reset ahora es opcional, el JS limpiará todo al guardar -->
+            <div class="row">
+                <div class="form-group col-md-4"><label>Nombres:</label><input type="text" class="form-control" id="nombres" required></div>
+                <div class="form-group col-md-4"><label>Apellidos:</label><input type="text" class="form-control" id="apellidos" required></div>
+                <div class="form-group col-md-4"><label>DPI (CUI):</label><input type="text" class="form-control" id="dpi" required></div>
+                
+                <div class="form-group col-md-4"><label>Edad:</label><input type="number" class="form-control" id="edad" required></div>
+                <div class="form-group col-md-4"><label>Sexo:</label><select class="form-control" id="sexo"><option value="M">Masculino</option><option value="F">Femenino</option></select></div>
+                <div class="form-group col-md-4"><label>Estado Civil:</label><select class="form-control" id="estadocivil"><option>Soltero</option><option>Casado</option></select></div>
+
+                <div class="form-group col-md-4"><label>Lugar Nacimiento:</label><input type="text" class="form-control" id="lugardenacimiento" required></div>
+                <div class="form-group col-md-4"><label>Cargo:</label><input type="text" class="form-control" id="cargo"></div>
+                <div class="form-group col-md-4"><label>Profesión:</label><input type="text" class="form-control" id="profesion"></div>
+
+                <div class="form-group col-md-4"><label>No. Registro:</label><input type="text" class="form-control" id="numeroregistro"></div>
+                <div class="form-group col-md-2"><label>Libro:</label><input type="text" class="form-control" id="libro"></div>
+                <div class="form-group col-md-2"><label>Folio:</label><input type="text" class="form-control" id="folio"></div>
+                <div class="form-group col-md-2"><label>¿Lee?:</label><select class="form-control" id="leer"><option>Si</option><option>No</option></select></div>
+                <div class="form-group col-md-2"><label>¿Escribe?:</label><select class="form-control" id="escribir"><option>Si</option><option>No</option></select></div>
+                
+                <div class="form-group col-md-12"><label>Grado Académico:</label><input type="text" class="form-control" id="grado"></div>
+
+                <div class="form-group col-md-4"><label class="text-primary">Fecha Conversión:</label><input type="date" class="form-control" id="conversion"></div>
+                <div class="form-group col-md-4"><label class="text-primary">Bautismo Agua:</label><input type="date" class="form-control" id="bautismoa"></div>
+                <div class="form-group col-md-4"><label class="text-primary">Recepción Miembro:</label><input type="date" class="form-control" id="recepcion"></div>
+                
+                <div class="form-group col-md-6"><label class="text-info">Bautismo Esp. Santo:</label><input type="date" class="form-control" id="bautismo_es"></div>
+                <div class="form-group col-md-6"><label class="text-info">Llamado Ministerio:</label><input type="date" class="form-control" id="llamado"></div>
+
+                <div class="form-group col-md-4"><label>Fallecido:</label><select class="form-control" id="fallecido"><option value="false">No</option><option value="true">Sí</option></select></div>
+                <div class="form-group col-md-4"><label>Transferido:</label><select class="form-control" id="transferido"><option value="false">No</option><option value="true">Sí</option></select></div>
+                <div class="form-group col-md-4"><label>Estado Activo:</label><select class="form-control" id="reg_estado"><option>Activo</option><option>Inactivo</option></select></div>
+
+                <div class="form-group col-md-12"><label>Código de Iglesia / Registro:</label><input type="text" class="form-control border-danger" id="codigoigle" required></div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg px-5 shadow">Guardar Registro Completo</button>
             </div>
         </form>
     </div>
 </div>
 <!--Fin del Formulario 2-->
-
-
 
 
    <!--Inicia Formulario de Ingresos de la IDEC sacpuy-->

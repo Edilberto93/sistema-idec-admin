@@ -121,20 +121,22 @@ document.getElementById('formregistro').addEventListener('submit', async functio
     // 1. LISTA DE CAMPOS OBLIGATORIOS A VALIDAR
     const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
     let formularioValido = true;
+    let primerCampoConError = null;
 
     ids.forEach(id => {
         const input = document.getElementById(id);
-        // Si el valor está vacío después de quitar espacios en blanco
         if (!input.value.trim()) {
-            input.classList.add('is-invalid'); // Borde rojo de Bootstrap
+            input.classList.add('is-invalid');
             formularioValido = false;
+            if (!primerCampoConError) primerCampoConError = input; // Captura el primero vacío
         } else {
-            input.classList.remove('is-invalid'); // Quita el borde rojo si ya está lleno
+            input.classList.remove('is-invalid');
         }
     });
 
     if (!formularioValido) {
-        alert("Por favor, completa todos los campos antes de guardar.");
+        alert("¡Error! Debes llenar todos los espacios en blanco antes de guardar.");
+        primerCampoConError.focus(); // Coloca el cursor en el primer campo vacío
         return; // Detiene la ejecución
     }
 
@@ -153,6 +155,10 @@ document.getElementById('formregistro').addEventListener('submit', async functio
     };
 
     // 3. ENVÍO A LA BASE DE DATOS
+    const btnGuardar = document.querySelector('.btn-guardar-pro');
+    btnGuardar.disabled = true; // Bloquea el botón para evitar doble clic
+    btnGuardar.textContent = 'Guardando...';
+
     try {
         const response = await fetch('TU_URL_AQUI', {
             method: 'POST',
@@ -169,5 +175,8 @@ document.getElementById('formregistro').addEventListener('submit', async functio
     } catch (error) {
         console.error('Error al enviar los datos:', error);
         alert('Ocurrió un error inesperado al conectar con el servidor.');
+    } finally {
+        btnGuardar.disabled = false; // Reactiva el botón
+        btnGuardar.textContent = 'Guardar';
     }
 });

@@ -113,62 +113,66 @@ function cerrarSesion() {
 }
 
 // =======================================================================
-// 5. LÓGICA DE GUARDADO DEL FORMULARIO DE SEDES
+// 5. LÓGICA DE GUARDADO DEL FORMULARIO DE SEDES (BLOQUE CORREGIDO)
 // =======================================================================
-document.getElementById('formregistro').addEventListener('submit', async function(e) {
-    e.preventDefault(); 
+const form = document.getElementById('formregistro');
 
-    const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
-    let formularioValido = true;
-    let primerCampoConError = null;
+if (form) {
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault(); 
 
-    // 1. VALIDACIÓN RIGUROSA
-    ids.forEach(id => {
-        const input = document.getElementById(id);
-        if (!input.value.trim()) {
-            input.classList.add('is-invalid');
-            formularioValido = false;
-            if (!primerCampoConError) primerCampoConError = input;
-        } else {
-            input.classList.remove('is-invalid');
-        }
-    });
+        const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
+        let formularioValido = true;
+        let primerCampoConError = null;
 
-    // 2. BLOQUEO TOTAL SI HAY ERROR
-    if (!formularioValido) {
-        alert("¡Error! Debes llenar todos los espacios en blanco.");
-        primerCampoConError.focus();
-        return; // <--- ESTO ES VITAL: Si hay error, aquí muere la función.
-    }
-
-    // 3. SI LLEGA AQUÍ, ES PORQUE TODO ESTÁ LLENO
-    const data = {
-        CodigoIglesia: document.getElementById('codigoig').value,
-        Pais: document.getElementById('pais').value,
-        Departamento: document.getElementById('departamento').value,
-        Municipio: document.getElementById('municipio').value,
-        Distrito: document.getElementById('distrito').value,
-        Aldea: document.getElementById('aldea').value,
-        Caserio: document.getElementById('caserio').value,
-        Region: document.getElementById('region').value,
-        Direccion: document.getElementById('direccion').value,
-        Estado: document.getElementById('estado').value === 'true'
-    };
-
-    try {
-        const response = await fetch('TU_URL_AQUI', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+        // 1. VALIDACIÓN RIGUROSA
+        ids.forEach(id => {
+            const input = document.getElementById(id);
+            if (!input.value.trim()) {
+                input.classList.add('is-invalid');
+                formularioValido = false;
+                if (!primerCampoConError) primerCampoConError = input;
+            } else {
+                input.classList.remove('is-invalid');
+            }
         });
 
-        if (response.ok) {
-            alert('¡Registro guardado exitosamente!');
-            document.getElementById('formregistro').reset();
-        } else {
-            alert('Error al guardar. Verifica los datos.');
+        // 2. BLOQUEO TOTAL SI HAY ERROR
+        if (!formularioValido) {
+            alert("¡Error! Debes llenar todos los espacios en blanco.");
+            primerCampoConError.focus();
+            return; // ESTE RETURN ES EL QUE DETIENE EL GUARDADO
         }
-    } catch (error) {
-        alert('Error de conexión con el servidor.');
-    }
-});
+
+        // 3. PREPARACIÓN DE DATOS
+        const data = {
+            CodigoIglesia: document.getElementById('codigoig').value,
+            Pais: document.getElementById('pais').value,
+            Departamento: document.getElementById('departamento').value,
+            Municipio: document.getElementById('municipio').value,
+            Distrito: document.getElementById('distrito').value,
+            Aldea: document.getElementById('aldea').value,
+            Caserio: document.getElementById('caserio').value,
+            Region: document.getElementById('region').value,
+            Direccion: document.getElementById('direccion').value,
+            Estado: document.getElementById('estado').value === 'true'
+        };
+
+        try {
+            const response = await fetch('TU_URL_AQUI', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert('¡Registro guardado exitosamente!');
+                form.reset();
+            } else {
+                alert('Error al guardar. Verifica los datos.');
+            }
+        } catch (error) {
+            alert('Error de conexión con el servidor.');
+        }
+    });
+}

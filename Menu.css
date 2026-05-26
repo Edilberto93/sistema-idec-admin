@@ -84,9 +84,7 @@ body, html {
 .titulo-formulario {
     text-align: center;
     color: #0066ff !important; /* Azul vibrante */
-    font-size: 2rem;
     font-weight: 700;          /* Lo hace más llamativo */
-    margin-bottom: 0px;
 }
 
 .subtitulo-formulario {
@@ -183,7 +181,7 @@ body, html {
 
     .titulo-formulario {
         font-size: 1.5rem;
-        margin-top: 10px; /* Elimina el margen negativo destructivo */
+        margin-top: 5px; /* Elimina el margen negativo destructivo */
     }
 }
 

@@ -113,69 +113,64 @@ function cerrarSesion() {
 }
 
 // =======================================================================
-// 5. LÓGICA DE GUARDADO DEL FORMULARIO DE SEDES (BLOQUE CORREGIDO)
+// LÓGICA DE GUARDADO DEL FORMULARIO DE SEDES (CORREGIDA)
 // =======================================================================
-const form = document.getElementById('formregistro');
+document.getElementById('formregistro').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Evita que la página se recargue automáticamente
 
-if (form) {
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault(); 
+    // 1. LISTA DE CAMPOS OBLIGATORIOS A VALIDAR
+    const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
+    let formularioValido = true;
 
-        const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
-        let formularioValido = true;
-        let primerCampoConError = null;
-
-        // 1. VALIDACIÓN RIGUROSA
-        ids.forEach(id => {
-            const input = document.getElementById(id);
-            // .trim() quita espacios, si es falso, el campo está vacío
-            if (!input.value.trim()) {
-                input.classList.add('is-invalid');
-                formularioValido = false;
-                if (!primerCampoConError) primerCampoConError = input;
-            } else {
-                input.classList.remove('is-invalid');
-            }
-        });
-
-        // 2. BLOQUEO TOTAL SI HAY ERROR
-        if (!formularioValido) {
-            alert("¡Error! Debes llenar todos los espacios en blanco antes de guardar.");
-            primerCampoConError.focus();
-            return; // <--- ESTO ES LO MÁS IMPORTANTE. Si falta algo, aquí termina la función.
-        }
-
-        // 3. SI LLEGA A ESTE PUNTO, ES PORQUE TODO ESTÁ LLENO
-        const data = {
-            CodigoIglesia: document.getElementById('codigoig').value,
-            Pais: document.getElementById('pais').value,
-            Departamento: document.getElementById('departamento').value,
-            Municipio: document.getElementById('municipio').value,
-            Distrito: document.getElementById('distrito').value,
-            Aldea: document.getElementById('aldea').value,
-            Caserio: document.getElementById('caserio').value,
-            Region: document.getElementById('region').value,
-            Direccion: document.getElementById('direccion').value,
-            Estado: document.getElementById('estado').value === 'true'
-        };
-
-        // 4. ENVÍO A LA BASE DE DATOS
-        try {
-            const response = await fetch('TU_URL_AQUI', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            if (response.ok) {
-                alert('¡Registro guardado exitosamente!');
-                form.reset();
-            } else {
-                alert('Error al guardar. Verifica los datos.');
-            }
-        } catch (error) {
-            console.error(error);
-            alert('Error de conexión con el servidor.');
+    // VALIDACIÓN: Revisar campo por campo
+    ids.forEach(id => {
+        const input = document.getElementById(id);
+        if (!input.value.trim()) {
+            input.classList.add('is-invalid'); // Marca en rojo
+            formularioValido = false;          // Cambia a falso si encuentra un vacío
+        } else {
+            input.classList.remove('is-invalid');
         }
     });
+
+    // ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE!
+    // Si no es válido, lanzamos el error y el 'return' DETIENE la ejecución
+    if (!formularioValido) {
+        alert("Por favor, completa todos los campos antes de guardar.");
+        return; // <--- ESTO EVITA QUE EL CÓDIGO SIGA HASTA EL FETCH
+    }
+
+    // 2. PREPARACIÓN DE DATOS (Solo se ejecuta si la validación pasó)
+    const data = {
+        CodigoIglesia: document.getElementById('codigoig').value,
+        Pais: document.getElementById('pais').value,
+        Departamento: document.getElementById('departamento').value,
+        Municipio: document.getElementById('municipio').value,
+        Distrito: document.getElementById('distrito').value,
+        Aldea: document.getElementById('aldea').value,
+        Caserio: document.getElementById('caserio').value,
+        Region: document.getElementById('region').value,
+        Direccion: document.getElementById('direccion').value,
+        Estado: document.getElementById('estado').value === 'true'
+    };
+
+    // 3. ENVÍO A LA BASE DE DATOS
+    try {
+        const response = await fetch('TU_URL_AQUI', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            alert('¡Registro guardado exitosamente!');
+            document.getElementById('formregistro').reset();
+        } else {
+            alert('Error al guardar. Por favor, revisa la conexión.');
+        }
+    } catch (error) {
+        console.error('Error al enviar los datos:', error);
+        alert('Ocurrió un error inesperado.');
+    }
+});
 }

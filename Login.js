@@ -1,7 +1,6 @@
 // ===============================================================
 // CONFIGURACIÓN CENTRALIZADA DE LA API EN LA NUBE (AZURE)
 // ===============================================================
-// CONFIGURACIÓN CENTRALIZADA
 const API_BASE_URL = "https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api";
 
 // Declaramos la variable global para que sea accesible en ambos flujos
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (response.ok) {
                     const data = await response.json();
-                    usuarioIDTemporal = data.UsuarioID; // Asignamos el valor correctamente
+                    usuarioIDTemporal = data.UsuarioID; 
 
                     const emailResponse = await fetch(`${API_BASE_URL}/codigos/generar`, {
                         method: "POST",
@@ -50,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             } catch (error) {
                 console.error("Error en login:", error);
-                Swal.fire("Error", "Fallo de conexión.", "error");
+                Swal.fire("Error", "Fallo de conexión al servidor.", "error");
             }
         });
     }
@@ -80,10 +79,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const resultado = await response.json();
 
-                // Validación de éxito
+                // Validación de éxito (el resultado viene de tu controlador)
                 if (response.ok && (resultado.Valido === 1 || resultado.Valido === true)) {
                     localStorage.setItem("token", "autenticado");
-                    window.location.href = "Menu.html";
+                    window.location.href = "Menu.html"; // Asegúrate que este archivo exista en tu servidor
                 } else {
                     Swal.fire("Código Inválido", "El código es incorrecto o expiró.", "error");
                 }

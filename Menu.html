@@ -74,60 +74,66 @@
          <!--Finaliza la bienvenida-->
 
         <!--Registro de IDEC-->
-     <div id="idec" class="content-section d-none">
-            <h1 class="titulo-formulario">Administración de sedes y ubicaciones regionales</h1>
-           <!--<p class="subtitulo-formulario">Llena cada uno de los espacios en blanco</p>--> 
-            <!-- Formulario 1 -->
-            <div class="form-container">
-                <form id="formregistro">
-                  <div class="form-group col-md-6">
+    <<div id="idec" class="content-section d-none">
+    <h1 class="titulo-formulario text-center">Administración de sedes</h1>
+    
+    <div class="container-fluid" style="max-width: 900px;"> 
+        <form id="formregistro">
+            
+            <div class="row">
+                <div class="form-group col-12 col-md-6 mb-3">
                     <label for="codigoig">Codigo Iglesia:</label>
-                    <input type="text" class="form-control" id="codigoig" placeholder="Ingrese Codigo Iglesia">
-                  </div>
-                  <div class="form-group col-md-6">
+                    <input type="text" class="form-control" id="codigoig" placeholder="Ej: 001">
+                </div>
+                <div class="form-group col-12 col-md-6 mb-3">
                     <label for="pais">Pais:</label>
                     <input type="text" class="form-control" id="pais" placeholder="Ingrese Pais">
-                  </div>
-                  <div class="form-group">
-                    <label for="departamento">Departamento:</label>
-                    <input type="text" class="form-control" id="departamento" placeholder="Ingrese Departamento">
-                  </div>
-                  <div class="form-group">
-                    <label for="municipio">Municipio:</label>
-                    <input type="text" class="form-control" id="municipio" placeholder="Ingrese Municipio">
-                  </div>
-                  <div class="form-group">
-                    <label for="distrito">Distrito:</label>
-                    <input type="text" class="form-control" id="distrito" placeholder="Ingrese Distrito">
-                  </div>
-                  <div class="form-group">
-                    <label for="aldea">Aldea:</label>
-                    <input type="text" class="form-control" id="aldea" placeholder="Ingrese Aldea">
-                  </div>
-                  <div class="form-group">
-                    <label for="caserio">Caserio:</label>
-                    <input type="text" class="form-control" id="caserio" placeholder="Ingrese Caserio">
-                  </div>
-                  <div class="form-group">
-                    <label for="region">Region:</label>
-                    <input type="text" class="form-control" id="region" placeholder="Ingrese Región">
-                  </div>
-                  <div class="form-group">
-                    <label for="direccion">Direccion:</label>
-                    <input type="text" class="form-control" id="direccion" placeholder="Ingrese Dirección">
-                  </div>
-                    <div class="form-group col-md-6">
-                    <label>Estado:</label>
-                        <select id="estado" class="form-control">
-                         <option value="true">Activo</option>
-                         <option value="false">Inactivo</option>
-                    </select>
-                    </div>
-                  <!-- Otros campos del formulario -->
-                  <button type="submit" class="btn btn-primary">Guardar</button>
-                  </form>
-              </div>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="form-group col-12 col-md-6 mb-3">
+                    <label for="departamento">Departamento:</label>
+                    <input type="text" class="form-control" id="departamento">
+                </div>
+                <div class="form-group col-12 col-md-6 mb-3">
+                    <label for="municipio">Municipio:</label>
+                    <input type="text" class="form-control" id="municipio">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-12 col-md-6 mb-3">
+                    <label for="distrito">Distrito:</label>
+                    <input type="text" class="form-control" id="distrito">
+                </div>
+                <div class="form-group col-12 col-md-6 mb-3">
+                    <label for="region">Region:</label>
+                    <input type="text" class="form-control" id="region">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-12 mb-3">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-12 col-md-6 mb-3">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" class="form-control">
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">Guardar Registro</button>
+        </form>
+    </div>
+</div>
 
 <!--Fin del Formulario 1-->
 

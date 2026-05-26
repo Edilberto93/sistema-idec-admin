@@ -83,9 +83,9 @@ body, html {
 /* Tipografías de encabezados interiores */
 .titulo-formulario {
     text-align: center;
-    color: #ffffff;
+    color: #0066ff !important; /* Azul vibrante */
     font-size: 2rem;
-    font-weight: 300;
+    font-weight: 700;          /* Lo hace más llamativo */
     margin-bottom: 5px;
 }
 

@@ -71,12 +71,13 @@ body, html {
 
 /* Tarjeta contenedora de cada uno de los 8 formularios */
 .form-container {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 1rem;
+    background: #ffffff; /* Blanco limpio */
+    border-radius: 12px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra elegante */
     width: 100%;
-    margin-bottom: 30px;
+    max-width: 800px; /* IMPORTANTE: Esto evita que sea gigante */
+    margin: 20px auto; /* Centra el formulario */
 }
 
 /* Tipografías de encabezados interiores */
@@ -102,10 +103,12 @@ body, html {
     padding-bottom: 8px;
 }
 
-.form-container .form-label {
-    color: #2c3e50;
-    font-weight: 600;
+.form-container label { /* Cambié .form-label por label para que afecte a todos */
+    color: #2c3e50; /* Azul grisáceo oscuro */
+    font-weight: 700; /* Más grueso/resaltado */
     font-size: 0.9rem;
+    margin-bottom: 8px;
+    display: block;
 }
 
 /* Estilos de la sección Estética de Inicio */
@@ -199,4 +202,11 @@ body, html {
         width: 100%; /* Todos los botones operativos se vuelven de ancho completo para facilitar la pulsación táctil */
         padding: 10px;
     }
+}
+/* Para los botones */
+.btn-guardar-pro {
+    width: auto !important; /* El botón solo ocupará lo que necesite su texto */
+    padding: 8px 30px !important;
+    display: block;
+    margin-left: auto; /* Alineado a la derecha */
 }

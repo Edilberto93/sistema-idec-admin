@@ -86,7 +86,7 @@ body, html {
     color: #0066ff !important; /* Azul vibrante */
     font-size: 2rem;
     font-weight: 700;          /* Lo hace más llamativo */
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 .subtitulo-formulario {

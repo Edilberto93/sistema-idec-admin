@@ -116,31 +116,18 @@ function cerrarSesion() {
 // LÓGICA DE GUARDADO DEL FORMULARIO DE SEDES (CORREGIDA)
 // =======================================================================
 document.getElementById('formregistro').addEventListener('submit', async function(e) {
-    e.preventDefault(); // Evita que la página se recargue automáticamente
-
-    // 1. LISTA DE CAMPOS OBLIGATORIOS A VALIDAR
-    const ids = ['codigoig', 'pais', 'departamento', 'municipio', 'distrito', 'aldea', 'caserio', 'region', 'direccion'];
-    let formularioValido = true;
-
-    // VALIDACIÓN: Revisar campo por campo
-    ids.forEach(id => {
-        const input = document.getElementById(id);
-        if (!input.value.trim()) {
-            input.classList.add('is-invalid'); // Marca en rojo
-            formularioValido = false;          // Cambia a falso si encuentra un vacío
-        } else {
-            input.classList.remove('is-invalid');
-        }
-    });
-
-    // ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE!
-    // Si no es válido, lanzamos el error y el 'return' DETIENE la ejecución
-    if (!formularioValido) {
-        alert("Por favor, completa todos los campos antes de guardar.");
-        return; // <--- ESTO EVITA QUE EL CÓDIGO SIGA HASTA EL FETCH
+    // 1. Esto detiene el envío si el navegador detecta que falta un 'required'
+    if (!this.checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+        alert("¡Error! Debes llenar todos los campos.");
+        return; 
     }
 
-    // 2. PREPARACIÓN DE DATOS (Solo se ejecuta si la validación pasó)
+    // 2. Prevenir recarga solo si es válido
+    e.preventDefault();
+
+    // 3. Preparar datos
     const data = {
         CodigoIglesia: document.getElementById('codigoig').value,
         Pais: document.getElementById('pais').value,
@@ -154,7 +141,7 @@ document.getElementById('formregistro').addEventListener('submit', async functio
         Estado: document.getElementById('estado').value === 'true'
     };
 
-    // 3. ENVÍO A LA BASE DE DATOS
+    // 4. Guardar
     try {
         const response = await fetch('TU_URL_AQUI', {
             method: 'POST',
@@ -163,14 +150,12 @@ document.getElementById('formregistro').addEventListener('submit', async functio
         });
 
         if (response.ok) {
-            alert('¡Registro guardado exitosamente!');
-            document.getElementById('formregistro').reset();
+            alert('¡Guardado exitosamente!');
+            this.reset();
         } else {
-            alert('Error al guardar. Por favor, revisa la conexión.');
+            alert('Error en el servidor.');
         }
     } catch (error) {
-        console.error('Error al enviar los datos:', error);
-        alert('Ocurrió un error inesperado.');
+        alert('Error de conexión.');
     }
 });
-}

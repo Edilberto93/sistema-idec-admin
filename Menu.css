@@ -210,3 +210,11 @@ body, html {
     display: block;
     margin-left: auto; /* Alineado a la derecha */
 }
+
+/* Este estilo le da el fondo azul claro a la sección que contiene el formulario */
+.content-section {
+    background-color: #f0f7ff !important; /* Azul cielo muy tenue y elegante */
+    padding: 40px 20px;
+    border-radius: 15px;
+    min-height: 80vh;
+}

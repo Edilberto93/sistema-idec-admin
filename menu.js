@@ -128,6 +128,7 @@ if (form) {
         // 1. VALIDACIÓN RIGUROSA
         ids.forEach(id => {
             const input = document.getElementById(id);
+            // .trim() quita espacios, si es falso, el campo está vacío
             if (!input.value.trim()) {
                 input.classList.add('is-invalid');
                 formularioValido = false;
@@ -139,12 +140,12 @@ if (form) {
 
         // 2. BLOQUEO TOTAL SI HAY ERROR
         if (!formularioValido) {
-            alert("¡Error! Debes llenar todos los espacios en blanco.");
+            alert("¡Error! Debes llenar todos los espacios en blanco antes de guardar.");
             primerCampoConError.focus();
-            return; // ESTE RETURN ES EL QUE DETIENE EL GUARDADO
+            return; // <--- ESTO ES LO MÁS IMPORTANTE. Si falta algo, aquí termina la función.
         }
 
-        // 3. PREPARACIÓN DE DATOS
+        // 3. SI LLEGA A ESTE PUNTO, ES PORQUE TODO ESTÁ LLENO
         const data = {
             CodigoIglesia: document.getElementById('codigoig').value,
             Pais: document.getElementById('pais').value,
@@ -158,6 +159,7 @@ if (form) {
             Estado: document.getElementById('estado').value === 'true'
         };
 
+        // 4. ENVÍO A LA BASE DE DATOS
         try {
             const response = await fetch('TU_URL_AQUI', {
                 method: 'POST',
@@ -172,6 +174,7 @@ if (form) {
                 alert('Error al guardar. Verifica los datos.');
             }
         } catch (error) {
+            console.error(error);
             alert('Error de conexión con el servidor.');
         }
     });

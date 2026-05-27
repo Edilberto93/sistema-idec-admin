@@ -199,7 +199,11 @@
                 <div class="form-group col-md-4"><label>Transferido:</label><select class="form-control" id="transferido"><option value="false">No</option><option value="true">Sí</option></select></div>
                 <div class="form-group col-md-4"><label>Estado Activo:</label><select class="form-control" id="reg_estado"><option>Activo</option><option>Inactivo</option></select></div>
 
-                <div class="form-group col-md-12"><label>Código de Iglesia / Registro:</label><input type="text" class="form-control border-danger" id="codigoigle" required></div>
+<div class="form-group col-md-12"><label for="codigoigle" class="font-weight-bold">Código de Iglesia / Registro:</label><select class="form-control border-danger" id="codigoigle" required>
+        <option value="">Cargando iglesias...</option>
+    </select>
+    <small class="text-muted">Seleccione la sede correspondiente.</small>
+</div>  
             </div>
 
             <div class="text-center mt-4">

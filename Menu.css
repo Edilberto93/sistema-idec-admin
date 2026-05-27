@@ -112,13 +112,14 @@ body, html {
 /* Estilos de la sección Estética de Inicio */
 .titulo-inicio {
     text-align: center;
-    color: white;
+    color: #0056b3; /* Un azul profesional sólido */
     font-weight: 700;
 }
 
 .lead {
     text-align: center;
-    color: #e5e8e8;
+    color: #4a6fa5; /* Un azul suave pero con suficiente pigmento para que no sea gris */
+    font-weight: 400;
 }
 
 .imagen-inicio {

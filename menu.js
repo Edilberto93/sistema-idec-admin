@@ -204,27 +204,26 @@ async function cargarPersonas() {
     const select = document.getElementById('codigoPerID');
     
     try {
+        // La URL de tu controlador configurado en [RoutePrefix("api/datospersonales")]
         const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/datospersonales');
         
-        if (!response.ok) throw new Error('Error al conectar con la API de personas');
+        if (!response.ok) throw new Error('Error al conectar con la API');
         
         const personas = await response.json();
-
-        // DEPURACIÓN: Esto te dirá exactamente qué nombres usar en la consola del navegador (F12)
-        console.log("Datos recibidos:", personas);
+        
+        // Verifica en la consola qué está llegando exactamente
+        console.log("Datos recibidos de la API:", personas);
 
         select.innerHTML = '<option value="">Seleccione un donante...</option>';
 
         personas.forEach(p => {
             const option = document.createElement('option');
             
-            // INTENTA CON ESTOS NOMBRES (la mayoría de APIs .NET devuelven minúsculas)
-            // Si el console.log te muestra "nombres" y "apellidos", usa esos.
-            const nombreCompleto = `${p.nombres || p.Nombre || ''} ${p.apellidos || p.Apellido || ''}`;
-            const idPersona = p.datosPersonalID || p.PersonaID || p.id;
-
-            option.value = idPersona; 
-            option.textContent = `${nombreCompleto} (ID: ${idPersona})`;
+            // Usamos las propiedades exactas definidas en tu clase DatosPersonales.cs
+            // Asegúrate de usar mayúsculas como están en tu modelo C#
+            option.value = p.DatosPersonalID; 
+            option.textContent = `${p.Nombres} ${p.Apellidos} (ID: ${p.DatosPersonalID})`;
+            
             select.appendChild(option);
         });
     } catch (error) {
@@ -233,6 +232,7 @@ async function cargarPersonas() {
     }
 }
 
+// Llamar al cargar la página
 document.addEventListener("DOMContentLoaded", cargarPersonas);
 
 

@@ -204,21 +204,27 @@ async function cargarPersonas() {
     const select = document.getElementById('codigoPerID');
     
     try {
-        // Asegúrate de que esta URL sea la correcta para tu endpoint de personas
         const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/datospersonales');
         
         if (!response.ok) throw new Error('Error al conectar con la API de personas');
         
         const personas = await response.json();
 
+        // DEPURACIÓN: Esto te dirá exactamente qué nombres usar en la consola del navegador (F12)
+        console.log("Datos recibidos:", personas);
+
         select.innerHTML = '<option value="">Seleccione un donante...</option>';
 
-        personas.forEach(persona => {
+        personas.forEach(p => {
             const option = document.createElement('option');
-            // 'persona.PersonaID' es el valor que guardas en la BD
-            option.value = persona.PersonaID; 
-            // 'persona.Nombre' y 'persona.Apellido' son lo que el usuario ve
-            option.textContent = `${persona.Nombre} ${persona.Apellido} (ID: ${persona.PersonaID})`;
+            
+            // INTENTA CON ESTOS NOMBRES (la mayoría de APIs .NET devuelven minúsculas)
+            // Si el console.log te muestra "nombres" y "apellidos", usa esos.
+            const nombreCompleto = `${p.nombres || p.Nombre || ''} ${p.apellidos || p.Apellido || ''}`;
+            const idPersona = p.datosPersonalID || p.PersonaID || p.id;
+
+            option.value = idPersona; 
+            option.textContent = `${nombreCompleto} (ID: ${idPersona})`;
             select.appendChild(option);
         });
     } catch (error) {
@@ -227,7 +233,6 @@ async function cargarPersonas() {
     }
 }
 
-// Llamar a esta función al cargar la página
 document.addEventListener("DOMContentLoaded", cargarPersonas);
 
 

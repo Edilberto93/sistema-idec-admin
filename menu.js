@@ -276,6 +276,38 @@ async function cargarIglesiasParaVincular() {
 // Inicialización
 document.addEventListener("DOMContentLoaded", cargarIglesiasParaVincular);
 
+/////Para cargar codigo iglesias en obras sociales
+async function cargarSedesIglesia() {
+    const select = document.getElementById('codigoIglesiaObras');
+    
+    // Protección: si no existe el elemento en esta página, no hacemos nada
+    if (!select) return;
+
+    try {
+        const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec');
+        
+        if (!response.ok) throw new Error(`Error en la API: ${response.status}`);
+        
+        const registros = await response.json();
+
+        // Limpiamos y agregamos opción inicial
+        select.innerHTML = '<option value="">Seleccione una sede...</option>';
+
+        registros.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.CodigoIglesia; // Asegúrate de que coincida con tu JSON
+            option.textContent = `${item.CodigoIglesia} - ${item.Departamento}, ${item.Municipio}`;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar sedes:", error);
+        select.innerHTML = '<option value="">Error al cargar datos</option>';
+    }
+}
+
+// Llamar a la función al cargar la página
+document.addEventListener("DOMContentLoaded", cargarSedesIglesia);
+
 
 
 

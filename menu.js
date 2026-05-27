@@ -239,33 +239,41 @@ document.addEventListener("DOMContentLoaded", cargarPersonas);
 async function cargarIglesiasParaVincular() {
     const select = document.getElementById('codigoIglesia');
     
+    // PROTECCIÓN: Si este ID no existe en la página, se sale sin dar error
+    if (!select) return; 
+
     try {
-        // Consultamos la API que devuelve la lista de iglesias
         const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec');
         
-        if (!response.ok) throw new Error('Error al conectar con la API de iglesias');
+        if (!response.ok) {
+            throw new Error(`Error en la API: ${response.status}`);
+        }
         
         const registros = await response.json();
 
-        // Limpiamos y agregamos una opción por defecto
+        // Limpiar y preparar el select
         select.innerHTML = '<option value="">Seleccione una iglesia...</option>';
 
+        if (registros.length === 0) {
+            select.innerHTML = '<option value="">No hay registros disponibles</option>';
+            return;
+        }
+
+        // Llenar el select
         registros.forEach(item => {
             const option = document.createElement('option');
-            
-            // Usamos el código como valor y mostramos el código y su ubicación
-            option.value = item.CodigoIglesia; 
+            // Asegúrate de que item.CodigoIglesia exista en la respuesta de la API
+            option.value = item.CodigoIglesia;
             option.textContent = `${item.CodigoIglesia} - ${item.Departamento}, ${item.Municipio}`;
-            
             select.appendChild(option);
         });
     } catch (error) {
         console.error("Error al cargar iglesias para vinculación:", error);
-        select.innerHTML = '<option value="">Error al cargar iglesias</option>';
+        select.innerHTML = '<option value="">Error de conexión</option>';
     }
 }
 
-// Llamar a la función cuando la página cargue
+// Inicialización
 document.addEventListener("DOMContentLoaded", cargarIglesiasParaVincular);
 
 

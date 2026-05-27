@@ -159,3 +159,37 @@ document.getElementById('formregistro').addEventListener('submit', async functio
         alert('Error de conexión.');
     }
 });
+
+
+// Función para cargar las iglesias en el select
+async function cargarIglesias() {
+    const select = document.getElementById('codigoigle');
+    try {
+        // Reemplaza con la URL de tu API que devuelve la lista de iglesias
+        const response = await fetch('TU_API_URL/api/iglesias'); 
+        const iglesias = await response.json();
+
+        select.innerHTML = '<option value="">Seleccione una iglesia</option>'; // Limpiar
+
+        iglesias.forEach(iglesia => {
+            const option = document.createElement('option');
+            option.value = iglesia.codigo; // El valor que se guarda en la BD
+            option.textContent = `${iglesia.codigo} - ${iglesia.nombre}`; // Lo que ve el usuario
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar iglesias:", error);
+        select.innerHTML = '<option value="">Error al cargar datos</option>';
+    }
+}
+
+// Llamar a la función cuando la página esté lista
+cargarIglesias();
+
+
+
+
+
+
+
+

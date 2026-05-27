@@ -199,6 +199,39 @@ document.addEventListener("DOMContentLoaded", cargarIglesias);
 
 
 
+//Para mostrar en una lista los miembros
+async function cargarPersonas() {
+    const select = document.getElementById('codigoPerID');
+    
+    try {
+        // Asegúrate de que esta URL sea la correcta para tu endpoint de personas
+        const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/datospersonales');
+        
+        if (!response.ok) throw new Error('Error al conectar con la API de personas');
+        
+        const personas = await response.json();
+
+        select.innerHTML = '<option value="">Seleccione un donante...</option>';
+
+        personas.forEach(persona => {
+            const option = document.createElement('option');
+            // 'persona.PersonaID' es el valor que guardas en la BD
+            option.value = persona.PersonaID; 
+            // 'persona.Nombre' y 'persona.Apellido' son lo que el usuario ve
+            option.textContent = `${persona.Nombre} ${persona.Apellido} (ID: ${persona.PersonaID})`;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar personas:", error);
+        select.innerHTML = '<option value="">Error al cargar personas</option>';
+    }
+}
+
+// Llamar a esta función al cargar la página
+document.addEventListener("DOMContentLoaded", cargarPersonas);
+
+
+
 
 
 

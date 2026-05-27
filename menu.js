@@ -317,10 +317,18 @@ async function cargarPersonas() {
         const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/datospersonales');
         const data = await response.json();
 
+        // --- DIAGNÓSTICO ---
+        console.log("Estructura real recibida:", data); 
+        // Si 'data' es un objeto y no un array, aquí verás donde está la lista
+        // -------------------
+
+        // Si data no es un array, buscamos la lista dentro del objeto
+        const lista = Array.isArray(data) ? data : (data.data || data.lista || []);
+
         select.innerHTML = '<option value="">Seleccione un donante...</option>';
 
-        data.forEach(p => {
-            // "p.Nombres || p.nombres" intenta uno, si no existe, usa el otro.
+        lista.forEach(p => {
+            // Depuración de propiedades
             const nombre = p.Nombres || p.nombres || "Sin nombre";
             const apellido = p.Apellidos || p.apellidos || "";
             const id = p.DatosPersonalID || p.datosPersonalID || p.id;
@@ -331,11 +339,9 @@ async function cargarPersonas() {
             select.appendChild(option);
         });
     } catch (error) {
-        console.error("Error en personas:", error);
+        console.error("Error al cargar personas:", error);
     }
 }
-
-
 
 
 

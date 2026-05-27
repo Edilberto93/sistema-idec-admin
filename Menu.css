@@ -88,10 +88,11 @@ body, html {
 }
 
 .subtitulo-formulario {
-    text-align: center;
-    color: #cfd8dc;
+  text-align: center;
+    color: #546e7a; /* Un azul grisáceo profesional, excelente legibilidad */
     font-size: 1.1rem;
     margin-bottom: 30px;
+    font-weight: 300; /* Un poco más de peso para que se lea mejor */
 }
 
 .form-container h3 {

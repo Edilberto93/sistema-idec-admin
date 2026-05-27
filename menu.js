@@ -164,32 +164,38 @@ document.getElementById('formregistro').addEventListener('submit', async functio
 // Función para cargar las iglesias en el select
 async function cargarIglesias() {
     const select = document.getElementById('codigoigle');
+    // Validar si el elemento existe antes de hacer nada
+    if (!select) return;
     try {
-        // AQUÍ DEBES PONER LA URL REAL DE TU SERVICIO EN AZURE
-        const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec'); 
-        
+        const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec');
+        // Mejora: Verificar si la respuesta fue exitosa (código 200-299)
+        if (!response.ok) {
+            throw new Error(`Error en la API: ${response.status}`);
+        }
         const registros = await response.json();
 
-        select.innerHTML = '<option value="">Seleccione una iglesia</option>'; // Limpiar
+        // Limpiar y preparar el select
+        select.innerHTML = '<option value="">Seleccione una iglesia</option>';
 
+        if (registros.length === 0) {
+            select.innerHTML = '<option value="">No hay registros disponibles</option>';
+            return;
+        }
+
+        // Llenar el select
         registros.forEach(item => {
             const option = document.createElement('option');
-            
-            // Usamos las propiedades exactas de tu modelo C#: CodigoIglesia, Departamento, etc.
-            option.value = item.CodigoIglesia; 
-            option.textContent = `${item.CodigoIglesia} - ${item.Departamento}, ${item.Municipio}`; 
-            
+            option.value = item.CodigoIglesia;
+            option.textContent = `${item.CodigoIglesia} - ${item.Departamento}, ${item.Municipio}`;
             select.appendChild(option);
         });
     } catch (error) {
         console.error("Error al cargar iglesias:", error);
-        select.innerHTML = '<option value="">Error al cargar datos</option>';
+        select.innerHTML = '<option value="">Error de conexión</option>';
     }
 }
-
-// Llamar a la función cuando la página esté lista
+// Inicialización
 document.addEventListener("DOMContentLoaded", cargarIglesias);
-
 
 
 

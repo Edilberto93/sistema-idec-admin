@@ -235,6 +235,43 @@ async function cargarPersonas() {
 // Llamar al cargar la página
 document.addEventListener("DOMContentLoaded", cargarPersonas);
 
+//Para la lista de ID iglesias en activos
+async function cargarIglesiasParaVincular() {
+    const select = document.getElementById('codigoIglesia');
+    
+    try {
+        // Consultamos la API que devuelve la lista de iglesias
+        const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec');
+        
+        if (!response.ok) throw new Error('Error al conectar con la API de iglesias');
+        
+        const registros = await response.json();
+
+        // Limpiamos y agregamos una opción por defecto
+        select.innerHTML = '<option value="">Seleccione una iglesia...</option>';
+
+        registros.forEach(item => {
+            const option = document.createElement('option');
+            
+            // Usamos el código como valor y mostramos el código y su ubicación
+            option.value = item.CodigoIglesia; 
+            option.textContent = `${item.CodigoIglesia} - ${item.Departamento}, ${item.Municipio}`;
+            
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar iglesias para vinculación:", error);
+        select.innerHTML = '<option value="">Error al cargar iglesias</option>';
+    }
+}
+
+// Llamar a la función cuando la página cargue
+document.addEventListener("DOMContentLoaded", cargarIglesiasParaVincular);
+
+
+
+
+
 
 
 

@@ -308,7 +308,33 @@ async function cargarSedesIglesia() {
 // Llamar a la función al cargar la página
 document.addEventListener("DOMContentLoaded", cargarSedesIglesia);
 
+/////Para la lista de idec en pagos 
+async function cargarIglesiasParaPago() {
+    const select = document.getElementById('codigoIglesiaPago');
+    if (!select) return;
 
+    try {
+        const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec');
+        if (!response.ok) throw new Error('Error al cargar iglesias');
+        
+        const registros = await response.json();
+
+        select.innerHTML = '<option value="">Seleccione una iglesia...</option>';
+
+        registros.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.CodigoIglesia; // Este es el valor que el botón tomará
+            option.textContent = `${item.CodigoIglesia} - ${item.Departamento}, ${item.Municipio}`;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar iglesias para pago:", error);
+        select.innerHTML = '<option value="">Error de conexión</option>';
+    }
+}
+
+// Llamar al cargar
+document.addEventListener("DOMContentLoaded", cargarIglesiasParaPago);
 
 
 

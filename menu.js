@@ -166,7 +166,7 @@ async function cargarIglesias() {
     const select = document.getElementById('codigoigle');
     try {
         // AQUÍ DEBES PONER LA URL REAL DE TU SERVICIO EN AZURE
-        const response = await fetch('https://Thttps://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec'); 
+        const response = await fetch('https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/registroidec'); 
         
         const registros = await response.json();
 

@@ -165,16 +165,20 @@ document.getElementById('formregistro').addEventListener('submit', async functio
 async function cargarIglesias() {
     const select = document.getElementById('codigoigle');
     try {
-        // Reemplaza con la URL de tu API que devuelve la lista de iglesias
-        const response = await fetch('TU_API_URL/api/iglesias'); 
-        const iglesias = await response.json();
+        // AQUÍ DEBES PONER LA URL REAL DE TU SERVICIO EN AZURE
+        const response = await fetch('https://TU-URL-DE-AZURE.azurewebsites.net/api/registroidec'); 
+        
+        const registros = await response.json();
 
         select.innerHTML = '<option value="">Seleccione una iglesia</option>'; // Limpiar
 
-        iglesias.forEach(iglesia => {
+        registros.forEach(item => {
             const option = document.createElement('option');
-            option.value = iglesia.codigo; // El valor que se guarda en la BD
-            option.textContent = `${iglesia.codigo} - ${iglesia.nombre}`; // Lo que ve el usuario
+            
+            // Usamos las propiedades exactas de tu modelo C#: CodigoIglesia, Departamento, etc.
+            option.value = item.CodigoIglesia; 
+            option.textContent = `${item.CodigoIglesia} - ${item.Departamento}, ${item.Municipio}`; 
+            
             select.appendChild(option);
         });
     } catch (error) {
@@ -184,8 +188,7 @@ async function cargarIglesias() {
 }
 
 // Llamar a la función cuando la página esté lista
-cargarIglesias();
-
+document.addEventListener("DOMContentLoaded", cargarIglesias);
 
 
 

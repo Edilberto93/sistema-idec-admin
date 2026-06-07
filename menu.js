@@ -378,7 +378,55 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarIglesiasEnSelect('codigoIglesiaFiltro'); 
 });
 
+//Inicia el js para descargar miembros de la idec en excel
+// Asegúrate de tener esta librería en tu <head> o antes de cerrar el </body>:
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
+async function descargarExcel(estado) {
+    // Obtenemos el código de iglesia del select existente en tu formulario
+    const codigoIglesia = document.getElementById('codigoIglesiaFiltro').value;
+    
+    if (!codigoIglesia) {
+        alert("Por favor, seleccione un Código de Iglesia primero.");
+        return;
+    }
+
+    // Mostramos un mensaje de carga (puedes mejorar esto con un spinner)
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "Generando...";
+    btn.disabled = true;
+
+    try {
+        // Construimos la URL dinámica
+        const url = `https://api-idec-sacpuy-gwdhcfafaec5c9g8.eastus-01.azurewebsites.net/api/miembros?codigoIglesia=${codigoIglesia}&estado=${estado}`;
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("No se pudieron obtener los datos");
+        
+        const data = await response.json();
+
+        if (data.length === 0) {
+            alert("No se encontraron registros para esta selección.");
+            return;
+        }
+
+        // Generar archivo Excel
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Miembros");
+
+        // Guardar archivo
+        XLSX.writeFile(workbook, `Reporte_Miembros_${codigoIglesia}_${estado}.xlsx`);
+        
+    } catch (error) {
+        console.error(error);
+        alert("Error al descargar el reporte: " + error.message);
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
 
 
 
